@@ -34,71 +34,38 @@ const Blog = () => {
       {/* blog cover end */}
 
       <div className="container px-4 py-12 mx-auto">
-        <div className="grid grid-cols-2 gap-6 xl:grid-cols-3">
+        <div className="grid grid-cols-2 gap-6 xl:grid-cols-4">
           {/* blog cards start */}
-          <div className="grid grid-cols-1 col-span-2 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 col-span-3 gap-6 sm:grid-cols-3">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((e, i) => (
-              <div className="w-full bg-white" key={i}>
-                <img className="h-[250px] w-full border" src="" alt="" />
-                <div className="p-4 space-y-2 border">
+              <div
+                className="w-full overflow-hidden bg-white shadow-lg cursor-pointer "
+                key={i}
+              >
+                <img
+                  className="object-cover w-full transition-transform duration-500 transform hover:scale-110 "
+                  src="/Assets/destination-5.jpg"
+                  alt=""
+                />
+                <div className="p-4 space-y-2">
                   <h3 className="text-sm font-normal uppercase sm:text-base text-lime-600">
                     Admin | Tours & Travels
                   </h3>
-                  <h1 className="text-xl sm:text-3xl">
+                  <h1 className="text-xl sm:text-3xl hover:text-lime-600">
                     Cox's Bazar such a beautiful place look like
                   </h1>
                 </div>
               </div>
             ))}
-            {/* <Stack spacing={2}>
-              <Pagination
-                count={10}
-                variant="outlined"
-                shape="rounded"
-                sx={{ customStyles }}
-              />
-            </Stack> */}
-            <div className="flex justify-center mt-5">
-              <Stack spacing={2}>
-                <Pagination
-                  count={10}
-                  variant="outlined"
-                  shape="rounded"
-                  page={page}
-                  onChange={handleChange}
-                  style={customStyles}
-                  // sx={{
-                  //   "& .Mui-selected": {
-                  //     background: "#A3E635 !important",
-                  //     padding: "23px !important",
-                  //   },
-                  // }}
-                />
-              </Stack>
-            </div>
-            {/* <div className="col-span-2 px-40 py-8 bg-white">
-              <div className="grid grid-cols-6 text-lime-600">
-                <button className="text-2xl border border-lime-600 hover:bg-gray-200 hover:text-lime-800">
-                  <BiArrowToLeft />
-                </button>
-                {[1, 2, 3, 4].map((e, i) => (
-                  <button
-                    key={i}
-                    className="py-4 text-xl border hover:bg-gray-200 border-y hover:text-lime-800"
-                  >
-                    {e}
-                  </button>
-                ))}
-                <button className="text-2xl border border-lime-600 hover:bg-gray-200 hover:text-lime-800">
-                  <BiArrowToRight />
-                </button>
-              </div>
-            </div> */}
           </div>
           {/* blog cards end */}
 
+          {/* categories start */}
+
+          {/* categories end */}
+
           {/* recent post & tags start */}
-          <div className="col-span-2 lg:col-span-1">
+          <div className="col-span-2 p-4 bg-white shadow-lg lg:col-span-1">
             <h1 className="mb-6 text-2xl font-semibold tracking-widest uppercase">
               Recent Post
             </h1>
