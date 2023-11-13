@@ -28,6 +28,12 @@ const Tour = () => {
         return response.data;
     });
 
+    // fetch category
+    const { data: category } = useQuery("category", async () => {
+        const response = await axios.get("http://localhost:5000/category");
+        return response.data;
+    });
+
     const applyFilters = () => {
         const filtered = data?.filter((info) => {
             // status
@@ -51,7 +57,7 @@ const Tour = () => {
     return (
         <>
             <Hero />
-            <Pkg data={data} isLoading={isLoading} divi={divi} setDivi={setDivi} selected={selected} setSelected={setSelected} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} selectedDuration={selectedDuration} setSelectedDuration={setSelectedDuration} filteredDetails={filteredDetails} value={value} setValue={setValue} />
+            <Pkg data={data} isLoading={isLoading} divi={divi} setDivi={setDivi} selected={selected} setSelected={setSelected} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} selectedDuration={selectedDuration} setSelectedDuration={setSelectedDuration} filteredDetails={filteredDetails} value={value} setValue={setValue} category={category}/>
         </>
     );
 };
@@ -85,16 +91,16 @@ const Hero = () => {
     )
 }
 
-const Pkg = ({ data, isLoading, divi, setDivi, selected, setSelected, selectedStatus, setSelectedStatus, selectedDuration, setSelectedDuration, filteredDetails, value, setValue }) => {
+const Pkg = ({ data, isLoading, divi, setDivi, selected, setSelected, selectedStatus, setSelectedStatus, selectedDuration, setSelectedDuration, filteredDetails, value, setValue, category }) => {
     return (
         <>
             <div className="container mx-auto lg:flex gap-5 my-10 h-full">
                 <div className="lg:w-1/4 shadow-lg rounded border p-5 h-full lg:sticky top-20">
-                    <Filtering divi={divi} setDivi={setDivi} selected={selected} setSelected={setSelected} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} selectedDuration={selectedDuration} setSelectedDuration={setSelectedDuration} value={value} setValue={setValue} filteredDetails={filteredDetails}/>
+                    <Filtering divi={divi} setDivi={setDivi} selected={selected} setSelected={setSelected} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} selectedDuration={selectedDuration} setSelectedDuration={setSelectedDuration} value={value} setValue={setValue} filteredDetails={filteredDetails} category={category}/>
                 </div>
                 <div className="lg:w-3/4">
                     <div className='shadow-lg rounded border p-5 mb-5'>
-                        <Category selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
+                        <Category selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} category={category}/>
                     </div>
                     <div className='shadow-lg rounded border p-5'>
                         {
@@ -303,7 +309,7 @@ const Filtering = ({
     );
 };
 
-const Category = ({ selectedStatus, setSelectedStatus }) => {
+const Category = ({ selectedStatus, setSelectedStatus, category }) => {
     const cat = [
         {
             title: 'Beach',
@@ -334,7 +340,7 @@ const Category = ({ selectedStatus, setSelectedStatus }) => {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
 
                 {
-                    cat.map((category, i) => (
+                    category?.map((category, i) => (
                         <div className={` p-4 shadow hover:shadow-lg rounded flex gap-3 justify-between items-center cursor-pointer ${selectedStatus === category.title ? 'bg-blue-800 text-white active' : 'bg-white'
                             }`} key={i} onClick={() => handleStatusClick(category.title)}>
 
