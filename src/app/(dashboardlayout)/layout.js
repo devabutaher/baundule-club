@@ -14,10 +14,12 @@ const MainLayout = ({ children }) => {
             <Toaster />
             <QueryClientProvider client={queryClient}>
                 <UserContext>
-                    <div className='min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased'>
+                    <div className='min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-700 text-white'>
                         <DashHeader />
-                        <Sidebar/>
-                        {children}
+                        <Sidebar />
+                        <div className='ml-14 md:ml-64'>
+                            {children}
+                        </div>
                     </div>
                 </UserContext>
             </QueryClientProvider>

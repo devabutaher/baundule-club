@@ -7,8 +7,8 @@ import { useContext } from 'react';
 const DashHeader = () => {
   const { user, logOut } = useContext(AuthContext)
   return (
-    <div className=''>
-      <div className="fixed w-full flex items-center justify-between h-16 bg-gray-800 text-white z-10">
+    <div className='sticky top-0'>
+      <div className=" w-full flex items-center justify-between h-16 bg-gray-800 text-white z-10">
         <div className="flex items-center justify-start pl-3 border-none">
           <Image className="w-10 h-10 mr-2 rounded-md overflow-hidden" src={user?.photoURL} alt='' width={500} height={500} />
           <div className=''>
