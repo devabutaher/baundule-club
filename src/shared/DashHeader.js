@@ -7,30 +7,39 @@ import { useContext } from 'react';
 const DashHeader = () => {
   const { user, logOut } = useContext(AuthContext)
   return (
-    <div className='container '>
-      <div class="fixed w-full flex items-center justify-between h-14 text-white z-10">
-        <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-80 h-14 bg-gray-800 border-none">
-          <Image class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src={user?.photoURL} alt='' width={500} height={500} />
-          <span class="hidden md:block">ADMIN</span>
-        </div>
-        <div class="flex justify-between items-center w-full h-14 bg-gray-800 header-right">
-          <div class="bg-white rounded flex items-center w-full max-w-xl mr-4 p-2 shadow-sm border border-gray-200">
-            <button class="outline-none focus:outline-none">
-              <svg class="w-5 text-gray-600 h-5 cursor-pointer" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </button>
-            <input type="search" name="" id="" placeholder="Search" class="w-full pl-3 text-sm text-black outline-none focus:outline-none bg-transparent" />
+    <div className=''>
+      <div className="fixed w-full flex items-center justify-between h-16 bg-gray-800 text-white z-10">
+        <div className="flex items-center justify-start pl-3 border-none">
+          <Image className="w-10 h-10 mr-2 rounded-md overflow-hidden" src={user?.photoURL} alt='' width={500} height={500} />
+          <div className=''>
+            <p>{user?.displayName}</p>
+            <div
+              class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="-ms-1 me-1.5 h-4 w-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <p class="whitespace-nowrap text-[10px]">ADMIN</p>
+            </div>
           </div>
-          <ul class="flex items-center">
-            <li>
-              <a href="#" class="flex items-center mr-4 hover:text-blue-100">
-                <span class="inline-flex mr-1">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                </span>
-                Logout
-              </a>
-            </li>
-          </ul>
         </div>
+        <button onClick={logOut} className="flex items-center mr-4 hover:text-blue-100">
+          <span className="inline-flex mr-1">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+          </span>
+          Logout
+        </button>
       </div>
     </div >
   );

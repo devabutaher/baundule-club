@@ -1,5 +1,6 @@
 "use client"
 import UserContext from '@/components/context/UserContext';
+import Sidebar from '@/components/dashboard/sidebar';
 import DashHeader from '@/shared/DashHeader';
 import React from 'react';
 import { Toaster } from 'react-hot-toast';
@@ -13,8 +14,9 @@ const MainLayout = ({ children }) => {
             <Toaster />
             <QueryClientProvider client={queryClient}>
                 <UserContext>
-                    <div className='min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-700 text-white'>
+                    <div className='min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased'>
                         <DashHeader />
+                        <Sidebar/>
                         {children}
                     </div>
                 </UserContext>

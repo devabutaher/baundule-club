@@ -1,11 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import React, { useState } from "react";
-import { BiArrowToLeft, BiArrowToRight } from "react-icons/bi";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { BiArrowToRight } from "react-icons/bi";
 
 const Blog = () => {
   const [page, setPage] = useState(1);
@@ -37,23 +35,23 @@ const Blog = () => {
           <div className="grid grid-cols-1 col-span-3 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((e, i) => (
               <article
-                class="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm"
+                className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm"
                 key={i}
               >
                 <Image
                   alt="Office"
                   src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                  class="h-48 w-full object-cover transition-transform duration-500 transform hover:scale-110"
+                  className="h-48 w-full object-cover transition-transform duration-500 transform hover:scale-110"
                   width={800}
                   height={300}
                 />
 
-                <div class="p-4 sm:p-6">
-                  <h3 class="text-lg font-medium text-gray-900">
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-lg font-medium text-gray-900">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   </h3>
 
-                  <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+                  <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
                     dolores, possimus pariatur animi temporibus nesciunt praesentium dolore
                     sed nulla ipsum eveniet corporis quidem, mollitia itaque minus soluta,
@@ -63,13 +61,13 @@ const Blog = () => {
 
                   <Link
                     href={`/blogdetails/${1}`}
-                    class="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-lime-600"
+                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-lime-600"
                   >
                     Find out more
 
                     <span
                       aria-hidden="true"
-                      class="block transition-all group-hover:ms-0.5 rtl:rotate-180"
+                      className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
                     >
                       &rarr;
                     </span>

@@ -120,9 +120,9 @@ const BottomNav = () => {
                             <li>
                                 {
                                     user ?
-                                        <button onClick={logOut} className="bg-transparent hover:bg-lime-700 text-lime-600 font-semibold hover:text-white py-1 px-4 border border-lime-600 hover:border-transparent rounded">
+                                        <Link href={'/dashboard'} className="bg-transparent hover:bg-lime-700 text-lime-600 font-semibold hover:text-white py-1 px-4 border border-lime-600 hover:border-transparent rounded">
                                             Dashboard
-                                        </button>
+                                        </Link>
                                         :
                                         <Link href={'/signin'} className="bg-transparent hover:bg-lime-700 text-lime-600 font-semibold hover:text-white py-1 px-4 border border-lime-600 hover:border-transparent rounded">
                                             Sign in
@@ -161,13 +161,9 @@ const BottomNav = () => {
                             </div>
                             {
                                 user ?
-                                    // <Link href={'/dashboard'} className="bg-transparent hover:bg-[#7083ee] text-white font-semibold hover:text-white py-1 px-4 border border-white hover:border-transparent rounded text-center">
-                                    //     Dashboard
-                                    // </Link>
-                                    <button onClick={logOut} className="bg-transparent hover:bg-[#7083ee] text-white font-semibold hover:text-white py-1 px-4 border border-white hover:border-transparent rounded text-center">
+                                    <Link href={'/dashboard'} className="bg-transparent hover:bg-[#7083ee] text-white font-semibold hover:text-white py-1 px-4 border border-white hover:border-transparent rounded text-center">
                                         Dashboard
-                                    </button>
-
+                                    </Link>
                                     :
                                     <Link href={'/signin'} className="bg-transparent hover:bg-[#7083ee] text-white font-semibold hover:text-white py-1 px-4 border border-white hover:border-transparent rounded text-center">
                                         Login
