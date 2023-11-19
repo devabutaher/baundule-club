@@ -17,7 +17,7 @@ const MainLayout = ({ children }) => {
                     <div className='min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased'>
                         <DashHeader />
                         <Sidebar />
-                        <div className='ml-14 md:ml-64'>
+                        <div className='ml-14 md:ml-64 mt-16'>
                             {children}
                         </div>
                     </div>
