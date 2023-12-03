@@ -16,7 +16,7 @@ import { useQuery } from "react-query";
 import { RxCross2 } from "react-icons/rx";
 import "../../../styles/packages.css";
 import Link from "next/link";
-import { filterPackages, getPackages } from "@/utils/api/package";
+import { getPackages } from "@/utils/api/package";
 import { getCategories } from "@/utils/api/category";
 
 const Tour = () => {
@@ -26,10 +26,7 @@ const Tour = () => {
 
   // duration
   const [value, setValue] = useState("");
-  console.log("value:", value);
-
-  const [selectedDuration, setSelectedDuration] = useState(null);
-  // console.log("selectedDuration:", selectedDuration);
+  const [selectedDuration, setSelectedDuration] = useState("");
 
   // category
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -39,12 +36,16 @@ const Tour = () => {
   const [limit, setLimit] = useState(2);
 
   // fetch packages
-  const { data: packages = [], isLoading } = useQuery({
+  const { data: { data: packages = [], total } = {}, isLoading } = useQuery({
     queryKey: ["packages", selectedStatus, selected, value, page, limit],
-    queryFn: () => filterPackages(selectedStatus, selected, value, page, limit),
+    queryFn: () => getPackages(selectedStatus, selected, value, page, limit),
   });
 
-  const totalPages = Math.ceil(packages.total / limit);
+  const totalPages = Math.ceil(
+    selectedStatus || selected || value
+      ? packages.length / limit
+      : total / limit
+  );
 
   // fetch category
   const { data: categories = [] } = useQuery({
@@ -56,7 +57,7 @@ const Tour = () => {
     <>
       <Hero />
       <Pkg
-        data={packages.data}
+        data={packages}
         isLoading={isLoading}
         divi={divi}
         setDivi={setDivi}

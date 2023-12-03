@@ -12,9 +12,6 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { getPackages } from "@/utils/api/package";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -60,11 +57,6 @@ const UserContext = ({ children }) => {
       return unsubscribe();
     };
   }, []);
-
-  const { data: packages = [] } = useQuery({
-    queryKey: ["packages"],
-    queryFn: () => getPackages(),
-  });
 
   const authInfo = {
     user,

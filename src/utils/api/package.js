@@ -1,3 +1,4 @@
+import { duration } from "@mui/material";
 import api from "../axios";
 
 // save package
@@ -11,9 +12,18 @@ export const savePackage = async (data) => {
 };
 
 // get all packages
-export const getPackages = async () => {
+export const getPackages = async (
+  categories,
+  division,
+  duration,
+  page,
+  limit
+) => {
   try {
-    const res = await api.get("/packages");
+    const res = await api.get(
+      `/packages?categories=${categories}&division=${division}&duration=${duration}&page=${page}&limit=${limit}`
+    );
+    console.log("res:", res);
     return res.data;
   } catch (error) {
     console.error(error.message);
@@ -69,6 +79,7 @@ export const filterPackages = async (
         limit,
       },
     });
+    console.log("res:", res);
     return res.data;
   } catch (error) {
     console.error(error.message);
