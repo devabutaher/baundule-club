@@ -16,7 +16,7 @@ import Gallery from '@/components/Home/gallery';
 const Home = () => {
     const whatsappURL = 'https://wa.me/8801872400423';
     return (
-        <section className='container mx-auto relative'>
+        <section className='container relative mx-auto'>
             <Hero />
             <Deals />
             <Packages />
@@ -24,7 +24,7 @@ const Home = () => {
             <Category />
             <Gallery/>
             <Blog />
-            <Link href={whatsappURL} target="_blank" rel="noopener noreferrer" className='fixed bottom-5 right-5 z-50'>
+            <Link href={whatsappURL} target="_blank" rel="noopener noreferrer" className='fixed z-50 bottom-5 right-5'>
                     <Image
                         src="/Assets/whatsapp.gif"
                         alt="WhatsApp"

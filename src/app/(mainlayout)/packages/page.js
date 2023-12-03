@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import { useState } from "react";
 import {
   FormControl,
   FormControlLabel,
@@ -11,61 +12,51 @@ import {
   Stack,
 } from "@mui/material";
 import Image from "next/image";
-import axios from "axios";
 import { useQuery } from "react-query";
 import { RxCross2 } from "react-icons/rx";
 import "../../../styles/packages.css";
 import Link from "next/link";
+import { filterPackages, getPackages } from "@/utils/api/package";
+import { getCategories } from "@/utils/api/category";
 
 const Tour = () => {
   // division
   const [divi, setDivi] = useState("");
   const [selected, setSelected] = useState("");
+
   // duration
   const [value, setValue] = useState("");
+  console.log("value:", value);
+
   const [selectedDuration, setSelectedDuration] = useState(null);
+  // console.log("selectedDuration:", selectedDuration);
+
   // category
   const [selectedStatus, setSelectedStatus] = useState("");
 
-  // filtering
-  const [filteredDetails, setFilteredDetails] = useState([]);
+  // page limit
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(2);
 
-  // fetch
-  const { data, isLoading } = useQuery("tour", async () => {
-    const response = await axios.get("http://localhost:5000/tour");
-    return response.data;
+  // fetch packages
+  const { data: packages = [], isLoading } = useQuery({
+    queryKey: ["packages", selectedStatus, selected, value, page, limit],
+    queryFn: () => filterPackages(selectedStatus, selected, value, page, limit),
   });
+
+  const totalPages = Math.ceil(packages.total / limit);
 
   // fetch category
-  const { data: category = [] } = useQuery("category", async () => {
-    const response = await axios.get("http://localhost:5000/category");
-    return response.data;
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getCategories(),
   });
 
-  const applyFilters = () => {
-    const filtered = data?.filter((info) => {
-      // status
-      const statusFilter =
-        selectedStatus === "" || info.category === selectedStatus;
-
-      const divisionFilter = selected === "" || info.division === selected;
-
-      // Convert the value to an integer for comparison
-      const intValue = parseInt(value);
-      // Check if the duration is less than or equal to the selected duration value
-      const durationFilter = isNaN(intValue) || info.duration <= intValue;
-      return statusFilter && divisionFilter && durationFilter;
-    });
-    setFilteredDetails(filtered);
-  };
-  useEffect(() => {
-    applyFilters();
-  }, [selectedStatus, data, selected, selectedDuration, value]);
   return (
     <>
       <Hero />
       <Pkg
-        data={data}
+        data={packages.data}
         isLoading={isLoading}
         divi={divi}
         setDivi={setDivi}
@@ -75,10 +66,12 @@ const Tour = () => {
         setSelectedStatus={setSelectedStatus}
         selectedDuration={selectedDuration}
         setSelectedDuration={setSelectedDuration}
-        filteredDetails={filteredDetails}
         value={value}
         setValue={setValue}
-        category={category}
+        category={categories}
+        page={page}
+        setPage={setPage}
+        totalPages={totalPages}
       />
     </>
   );
@@ -144,10 +137,12 @@ const Pkg = ({
   setSelectedStatus,
   selectedDuration,
   setSelectedDuration,
-  filteredDetails,
   value,
   setValue,
   category,
+  page,
+  setPage,
+  totalPages,
 }) => {
   return (
     <>
@@ -164,7 +159,6 @@ const Pkg = ({
             setSelectedDuration={setSelectedDuration}
             value={value}
             setValue={setValue}
-            filteredDetails={filteredDetails}
             category={category}
           />
         </div>
@@ -183,7 +177,7 @@ const Pkg = ({
               </>
             ) : (
               <>
-                {filteredDetails?.map((pkg, i) => {
+                {data?.map((pkg, i) => {
                   return (
                     <>
                       <article
@@ -204,7 +198,7 @@ const Pkg = ({
                         </div>
 
                         <div className="sm:basis-56">
-                          <Image
+                          <img
                             alt="Guitar"
                             src={pkg.coverimg}
                             className="object-cover w-full h-48 aspect-square md:h-full"
@@ -219,9 +213,9 @@ const Pkg = ({
                               {pkg.location}
                             </h3>
 
-                            <p className="mt-2 text-gray-700 line-clamp-4 text-sm/relaxed">
+                            {/* <p className="mt-2 text-gray-700 line-clamp-4 text-sm/relaxed">
                               {pkg?.description?.map((desc) => desc.desc)}
-                            </p>
+                            </p> */}
                           </div>
 
                           <div className="sm:flex sm:items-end sm:justify-end">
@@ -239,7 +233,11 @@ const Pkg = ({
                 })}
               </>
             )}
-            <Paginations />
+            <Paginations
+              page={page}
+              setPage={setPage}
+              totalPages={totalPages}
+            />
           </div>
         </div>
       </div>
@@ -262,15 +260,15 @@ const Filtering = ({
 
   // duration
   const durations = [
-    { value: 1, label: "1 day" },
-    { value: 2, label: "2 days" },
-    { value: 3, label: "3-4 days" },
-    { value: 4, label: "5+ days" },
+    { value: "1-1", label: "1 day" },
+    { value: "2-2", label: "2 days" },
+    { value: "3-4", label: "3-4 days" },
+    { value: "5-30", label: "5+ days" },
   ];
   const handleChanged = (event) => {
     const selectedValue = event.target.value;
     const selectedLabel = durations.find(
-      (item) => item.value === parseInt(selectedValue)
+      (item) => item.value === selectedValue
     )?.label;
     setSelectedDuration(selectedLabel);
     setValue(selectedValue);
@@ -300,13 +298,13 @@ const Filtering = ({
     const selectedLabel = division.find(
       (item) => item.value === selectedValue
     )?.label;
-    setSelected(selectedLabel);
     setDivi(selectedValue);
+    setSelected(selectedLabel);
   };
 
   const clearDivision = () => {
-    setSelected("");
     setDivi("");
+    setSelected("");
     handleShowAllDataChange();
   };
 
@@ -430,7 +428,7 @@ const Category = ({ selectedStatus, setSelectedStatus, category }) => {
       icon: "/Assets/icon/waterfall.png",
     },
     {
-      title: "Green Tourism",
+      title: "Mountain",
       icon: "/Assets/icon/hill.png",
     },
     {
@@ -450,7 +448,7 @@ const Category = ({ selectedStatus, setSelectedStatus, category }) => {
   return (
     <>
       <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {category?.map((category, i) => (
+        {cat?.map((category, i) => (
           <div
             className={` p-4 shadow hover:shadow-lg rounded flex gap-3 justify-between items-center cursor-pointer ${
               selectedStatus === category.title
@@ -461,7 +459,7 @@ const Category = ({ selectedStatus, setSelectedStatus, category }) => {
             onClick={() => handleStatusClick(category.title)}
           >
             <h1 style={{ lineHeight: "1.3rem" }}>{category.title}</h1>
-            <Image
+            <img
               src={category.icon}
               alt={category.title}
               width={200}
@@ -474,8 +472,7 @@ const Category = ({ selectedStatus, setSelectedStatus, category }) => {
     </>
   );
 };
-const Paginations = () => {
-  const [page, setPage] = useState(1);
+const Paginations = ({ setPage, page, totalPages }) => {
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -483,7 +480,7 @@ const Paginations = () => {
     <div className="flex justify-center mt-5">
       <Stack spacing={2}>
         <Pagination
-          count={10}
+          count={totalPages}
           variant="outlined"
           shape="rounded"
           page={page}

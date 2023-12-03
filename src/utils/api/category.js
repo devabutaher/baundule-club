@@ -11,7 +11,7 @@ export const saveCategory = async (data) => {
 };
 
 // get all categories
-export const getCategory = async () => {
+export const getCategories = async () => {
   try {
     const res = await api.get("/categories");
     return res.data;

@@ -11,7 +11,7 @@ export const savePackage = async (data) => {
 };
 
 // get all packages
-export const getPackage = async () => {
+export const getPackages = async () => {
   try {
     const res = await api.get("/packages");
     return res.data;
@@ -61,7 +61,8 @@ export const filterPackages = async (
   try {
     const res = await api.get("/packages", {
       params: {
-        categories: categories.join(","), // categories is an array
+        // categories: categories.join(","), // categories is an array
+        categories, // categories is an array
         division,
         duration,
         page,
