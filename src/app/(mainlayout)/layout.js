@@ -1,26 +1,16 @@
-"use client"
-import UserContext from '@/components/context/UserContext';
-import Footer from '@/shared/Footer';
-import Navbar from '@/shared/Navbar';
-import React from 'react';
-import { Toaster } from 'react-hot-toast';
-import { QueryClient, QueryClientProvider } from 'react-query';
+"use client";
 
-const queryClient = new QueryClient();
+import Footer from "@/shared/Footer";
+import Navbar from "@/shared/Navbar";
 
 const MainLayout = ({ children }) => {
-    return (
-        <div>
-            <Toaster />
-            <QueryClientProvider client={queryClient}>
-                <UserContext>
-                    <Navbar />
-                    {children}
-                    <Footer />
-                </UserContext>
-            </QueryClientProvider>
-        </div>
-    );
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
+  );
 };
 
 export default MainLayout;
