@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import "@/styles/packages.css";
+import { getCategories } from "@/utils/api/category";
+import { getPackages } from "@/utils/api/package";
 import {
   FormControl,
   FormControlLabel,
@@ -11,13 +13,10 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import Image from "next/image";
-import { useQuery } from "react-query";
-import { RxCross2 } from "react-icons/rx";
-import "../../../styles/packages.css";
 import Link from "next/link";
-import { getPackages } from "@/utils/api/package";
-import { getCategories } from "@/utils/api/category";
+import { useState } from "react";
+import { RxCross2 } from "react-icons/rx";
+import { useQuery } from "react-query";
 
 const Tour = () => {
   // division

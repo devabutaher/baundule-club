@@ -1,16 +1,17 @@
 "use client";
+
+import "@/styles/packages.css";
+import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { MdLocationPin } from "react-icons/md";
 import { TbCurrencyTaka } from "react-icons/tb";
-
-import axios from "axios";
-import Link from "next/link";
 import { useQuery, useQueryClient } from "react-query";
-import "../../styles/packages.css";
 
 const Packages = () => {
   const [displayedPackages, setDisplayedPackages] = useState(3);
+
   const loadMore = () => {
     setDisplayedPackages(data.length);
   };

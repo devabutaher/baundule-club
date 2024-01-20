@@ -1,4 +1,4 @@
-import Sidebar from "@/components/dashboard/sidebar";
+import Sidebar from "@/components/Dashboard/Sidebar";
 import DashHeader from "@/shared/DashHeader";
 
 const MainLayout = ({ children }) => {

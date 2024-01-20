@@ -1,4 +1,4 @@
-import AllProvider from "@/provider/AllProvider";
+import AllProvider from "@/providers/AllProvider";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 

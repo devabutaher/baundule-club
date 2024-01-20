@@ -6,6 +6,7 @@ import { useContext } from "react";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
+
   return (
     <>
       <div className="overflow-hidden rounded-sm">
@@ -13,14 +14,14 @@ const Profile = () => {
           <Image
             src={"/Assets/dashboardBanner.jpg"}
             alt="profile cover"
-            className="h-full w-full rounded-tl-sm rounded-tr-sm object-cover object-center"
+            className="object-cover object-center w-full h-full rounded-tl-sm rounded-tr-sm"
             width={500}
             height={500}
           />
-          <div className="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
+          <div className="absolute z-10 bottom-1 right-1 xsm:bottom-4 xsm:right-4">
             <label
               htmlFor="cover"
-              className="flex cursor-pointer items-center justify-center gap-2 rounded bg-primary py-1 px-2 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
+              className="flex items-center justify-center gap-2 px-2 py-1 text-sm font-medium text-white rounded cursor-pointer bg-primary hover:bg-opacity-80 xsm:px-4"
             >
               <input type="file" name="cover" id="cover" className="sr-only" />
               <span>
@@ -52,13 +53,13 @@ const Profile = () => {
         </div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="flex justify-center ">
-            <div className="relative -mt-20 z-20 rounded-full bg-white/20  backdrop-blur p-3">
+            <div className="relative z-20 p-3 -mt-20 rounded-full bg-white/20 backdrop-blur">
               <Image
-                src={user.photoURL}
+                src={user?.photoURL}
                 alt="profile"
                 width={500}
                 height={500}
-                className="w-36 h-36 mx-auto rounded-full dark:bg-gray-500 aspect-square"
+                className="mx-auto rounded-full w-36 h-36 dark:bg-gray-500 aspect-square"
               />
               <label
                 htmlFor="profile"
@@ -96,9 +97,9 @@ const Profile = () => {
           </div>
           <div className="mt-4">
             <h3 className="mb-1.5 text-2xl font-semibold text-black">
-              {user.displayName}
+              {user?.displayName}
             </h3>
-            <p className="font-medium">{user.email}</p>
+            <p className="font-medium">{user?.email}</p>
 
             <div className="mx-auto max-w-180">
               <p className="mt-4">
