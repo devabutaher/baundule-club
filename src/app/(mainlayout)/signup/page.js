@@ -1,5 +1,5 @@
 "use client";
-import { AuthContext } from "@/components/context/UserContext";
+import { AuthContext } from "@/context/UserContext";
 import { saveUser } from "@/utils/api/user";
 import Image from "next/image";
 import Link from "next/link";

@@ -1,5 +1,5 @@
 import { getPackages } from "@/utils/api/package";
-import React, { createContext } from "react";
+import { createContext } from "react";
 import { useQuery } from "react-query";
 
 export const PackageContext = createContext();

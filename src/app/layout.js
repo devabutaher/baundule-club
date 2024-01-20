@@ -1,6 +1,6 @@
-import AllProvider from "@/components/provider/AllProvider";
-import "./globals.css";
+import AllProvider from "@/provider/AllProvider";
 import { Toaster } from "react-hot-toast";
+import "./globals.css";
 
 export const metadata = {
   title: "Baundule Club",

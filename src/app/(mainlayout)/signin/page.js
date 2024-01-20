@@ -1,15 +1,15 @@
 "use client";
-import React, { useContext, useState } from "react";
+import { AuthContext } from "@/context/UserContext";
+import { saveUser } from "@/utils/api/user";
+import { sendPasswordResetEmail } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { BsGoogle } from "react-icons/bs";
-import { AuthContext } from "@/components/context/UserContext";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { sendPasswordResetEmail } from "firebase/auth";
-import { FaBeer, FaEye, FaEyeSlash } from "react-icons/fa";
-import { saveUser } from "@/utils/api/user";
+import toast from "react-hot-toast";
+import { BsGoogle } from "react-icons/bs";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignIn = () => {
   const { googleSignIn, login, auth } = useContext(AuthContext);

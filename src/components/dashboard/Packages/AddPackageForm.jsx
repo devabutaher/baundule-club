@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const AddPackageForm = () => {
-  const [divisionID, setDivisionID] = useState(1);
+  const [divisionID, setDivisionID] = useState(6);
   const [filteredDistrict, setFilteredDistrict] = useState(districtData);
 
   useEffect(() => {
