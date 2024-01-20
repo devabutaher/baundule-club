@@ -1,29 +1,28 @@
-"use client"
+"use client";
 
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { visuallyHidden } from '@mui/utils';
-import { Menu, MenuItem } from '@mui/material';
-import Link from 'next/link';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useState } from 'react';
+import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Menu, MenuItem } from "@mui/material";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { alpha } from "@mui/material/styles";
+import { visuallyHidden } from "@mui/utils";
+import Link from "next/link";
+import PropTypes from "prop-types";
+import { useMemo, useState } from "react";
 
 const rows = [
   {
@@ -32,7 +31,7 @@ const rows = [
     destination: "Dhaka",
     duration: 3,
     amount: 1800,
-    status: "active"
+    status: "active",
   },
   {
     id: 2,
@@ -40,9 +39,9 @@ const rows = [
     destination: "Narsingdi",
     duration: 4,
     amount: 2800,
-    status: "false"
+    status: "false",
   },
-]
+];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -55,7 +54,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -74,30 +73,29 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'id',
-    label: 'SL.No.',
+    id: "id",
+    label: "SL.No.",
   },
   {
-    id: 'name',
-    label: 'Package Name',
+    id: "name",
+    label: "Package Name",
   },
   {
-    id: 'destination',
-    label: 'Destination',
+    id: "destination",
+    label: "Destination",
   },
   {
-    id: 'duration',
-    label: 'Duration',
+    id: "duration",
+    label: "Duration",
   },
   {
-    id: 'amount',
-    label: 'Amount',
+    id: "amount",
+    label: "Amount",
   },
 ];
 
 function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } =
-    props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -108,18 +106,18 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            padding={'normal'}
+            padding={"normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
               ) : null}
             </TableSortLabel>
@@ -135,7 +133,7 @@ EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
@@ -150,13 +148,16 @@ function EnhancedTableToolbar(props) {
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+            alpha(
+              theme.palette.primary.main,
+              theme.palette.action.activatedOpacity
+            ),
         }),
       }}
     >
       {numSelected > 0 ? (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           color="inherit"
           variant="subtitle1"
           component="div"
@@ -165,7 +166,7 @@ function EnhancedTableToolbar(props) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -195,18 +196,17 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function Packages() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+export default function PackageTable() {
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -220,13 +220,13 @@ export default function Packages() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = React.useMemo(
+  const visibleRows = useMemo(
     () =>
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
+        page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage],
+    [order, orderBy, page, rowsPerPage]
   );
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -240,7 +240,6 @@ export default function Packages() {
 
   const handleClose = () => {
     setAnchorEl(null);
-
   };
 
   const handleEditClick = () => {
@@ -248,13 +247,13 @@ export default function Packages() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+    <Box sx={{ width: "100%" }}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={'medium'}
+            size={"medium"}
           >
             <EnhancedTableHead
               order={order}
@@ -270,7 +269,7 @@ export default function Packages() {
                     hover
                     tabIndex={-1}
                     key={row.id}
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: "pointer" }}
                   >
                     <TableCell>{row.id}</TableCell>
                     <TableCell
@@ -285,7 +284,9 @@ export default function Packages() {
                     <TableCell>{row.duration}</TableCell>
                     <TableCell>{row.amount}</TableCell>
                     <TableCell>
-                      <MoreVertIcon onClick={(event) => handleClickId(event, row._id)} />
+                      <MoreVertIcon
+                        onClick={(event) => handleClickId(event, row._id)}
+                      />
                       <Menu
                         id="simple-menu"
                         anchorEl={anchorEl}
@@ -294,14 +295,11 @@ export default function Packages() {
                       >
                         <MenuItem onClick={handleEditClick}>
                           <Link href={``} passHref>
-                            <div>
-                              Edit
-                            </div>
+                            <div>Edit</div>
                           </Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>Delete</MenuItem>
                       </Menu>
-
                     </TableCell>
                   </TableRow>
                 );
@@ -309,7 +307,7 @@ export default function Packages() {
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (53) * emptyRows,
+                    height: 53 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />

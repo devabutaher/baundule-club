@@ -1,21 +1,25 @@
-"use client"
+"use client";
 
-import { AuthContext } from '@/components/context/UserContext';
-import Image from 'next/image';
-import { useContext } from 'react';
+import { AuthContext } from "@/context/UserContext";
+import Image from "next/image";
+import { useContext } from "react";
 
 const DashHeader = () => {
-  const { user, logOut } = useContext(AuthContext)
+  const { user, logOut } = useContext(AuthContext);
   return (
-    <div className=''>
+    <div className="">
       <div className="fixed w-full flex items-center justify-between h-16 bg-gray-800 text-white z-50">
         <div className="flex items-center justify-start pl-3 border-none">
-          <Image className="w-10 h-10 mr-2 rounded-md overflow-hidden" src={user?.photoURL} alt='' width={500} height={500} />
-          <div className=''>
+          <Image
+            className="w-10 h-10 mr-2 rounded-md overflow-hidden"
+            src={user?.photoURL}
+            alt=""
+            width={500}
+            height={500}
+          />
+          <div className="">
             <p>{user?.displayName}</p>
-            <div
-              class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700"
-            >
+            <div class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -34,14 +38,30 @@ const DashHeader = () => {
             </div>
           </div>
         </div>
-        <button onClick={logOut} className="flex items-center mr-4 hover:text-blue-100">
+        <button
+          onClick={logOut}
+          className="flex items-center mr-4 hover:text-blue-100"
+        >
           <span className="inline-flex mr-1">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+              ></path>
+            </svg>
           </span>
           Logout
         </button>
       </div>
-    </div >
+    </div>
   );
 };
 
