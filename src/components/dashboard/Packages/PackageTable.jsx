@@ -1,6 +1,7 @@
 "use client";
 
 import usePackages from "@/hooks/usePackages";
+import { deletePackage } from "@/utils/api/package";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -24,6 +25,7 @@ import { visuallyHidden } from "@mui/utils";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
+import toast from "react-hot-toast";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -177,7 +179,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function PackageTable() {
-  const { allPackages } = usePackages();
+  const { allPackages, refetch } = usePackages();
 
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
@@ -227,6 +229,17 @@ export default function PackageTable() {
     handleClose();
   };
 
+  const handleDelete = async (id) => {
+    const response = await deletePackage(id);
+
+    if (response?.success) {
+      refetch();
+      toast.success("Package deleted successfully");
+    }
+
+    handleClose();
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -267,11 +280,16 @@ export default function PackageTable() {
                         onClose={handleClose}
                       >
                         <MenuItem onClick={handleEditClick}>
-                          <Link href={``} passHref>
+                          <Link
+                            passHref
+                            href={`/dashboard/update-package?id=${row._id}`}
+                          >
                             <div>Edit</div>
                           </Link>
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>Delete</MenuItem>
+                        <MenuItem onClick={() => handleDelete(row._id)}>
+                          Delete
+                        </MenuItem>
                       </Menu>
                     </TableCell>
                   </TableRow>
