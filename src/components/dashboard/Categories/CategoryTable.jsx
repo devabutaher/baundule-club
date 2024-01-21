@@ -1,6 +1,7 @@
 "use client";
 
-import usePackages from "@/hooks/usePackages";
+import useCategory from "@/hooks/useCategory";
+import { deleteCategory } from "@/utils/api/category";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -21,9 +22,10 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { alpha } from "@mui/material/styles";
 import { visuallyHidden } from "@mui/utils";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
+import toast from "react-hot-toast";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -59,20 +61,8 @@ const headCells = [
     label: "SL.No.",
   },
   {
-    id: "name",
-    label: "Package Name",
-  },
-  {
-    id: "tourLocation",
-    label: "Destination",
-  },
-  {
-    id: "duration",
-    label: "Duration",
-  },
-  {
-    id: "price",
-    label: "Amount",
+    id: "title",
+    label: "Category Name",
   },
 ];
 
@@ -176,8 +166,9 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function PackageTable() {
-  const { allPackages } = usePackages();
+export default function CategoryTable() {
+  const { categories, refetch } = useCategory();
+  const router = useRouter();
 
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
@@ -200,15 +191,15 @@ export default function PackageTable() {
   };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - allPackages.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - categories.length) : 0;
 
   const visibleRows = useMemo(
     () =>
-      stableSort(allPackages, getComparator(order, orderBy)).slice(
+      stableSort(categories, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, allPackages, page, rowsPerPage]
+    [order, orderBy, categories, page, rowsPerPage]
   );
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -223,8 +214,20 @@ export default function PackageTable() {
     setAnchorEl(null);
   };
 
-  const handleEditClick = () => {
+  const handleDelete = async (id) => {
+    const response = await deleteCategory(id);
+
+    if (response?.success) {
+      refetch();
+      toast.success("Category deleted successfully");
+    }
+
     handleClose();
+  };
+
+  const handleUpdate = async (id) => {
+    handleClose();
+    router.push(`/dashboard/update-category?id=${id}`);
   };
 
   return (
@@ -240,7 +243,7 @@ export default function PackageTable() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={allPackages.length}
+              rowCount={categories.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -252,10 +255,7 @@ export default function PackageTable() {
                     sx={{ cursor: "pointer" }}
                   >
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.tourLocation}</TableCell>
-                    <TableCell>{row.duration}</TableCell>
-                    <TableCell>{row.price}</TableCell>
+                    <TableCell>{row.title}</TableCell>
                     <TableCell>
                       <MoreVertIcon
                         onClick={(event) => handleClickId(event, row._id)}
@@ -266,12 +266,12 @@ export default function PackageTable() {
                         open={Boolean(anchorEl) && clickedRowId === row._id}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleEditClick}>
-                          <Link href={``} passHref>
-                            <div>Edit</div>
-                          </Link>
+                        <MenuItem onClick={() => handleUpdate(row._id)}>
+                          Update
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>Delete</MenuItem>
+                        <MenuItem onClick={() => handleDelete(row._id)}>
+                          Delete
+                        </MenuItem>
                       </Menu>
                     </TableCell>
                   </TableRow>
@@ -292,7 +292,7 @@ export default function PackageTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={allPackages.length}
+          count={categories.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

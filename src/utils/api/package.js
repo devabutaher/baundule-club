@@ -33,7 +33,6 @@ export const getPackages = async (
     const response = await api.get(
       `/packages?categories=${categories}&division=${division}&duration=${duration}&page=${page}&limit=${limit}`
     );
-    console.log("response:", response);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -43,7 +42,7 @@ export const getPackages = async (
 // get single package
 export const getSinglePackage = async (id) => {
   try {
-    const response = await api.get(`/packages/:${id}`);
+    const response = await api.get(`/packages/${id}`);
     return response.data;
   } catch (error) {
     console.error(error.message);
@@ -53,7 +52,7 @@ export const getSinglePackage = async (id) => {
 // update package
 export const updatePackage = async (id) => {
   try {
-    const response = await api.put(`/packages/:${id}`);
+    const response = await api.put(`/packages/${id}`);
     return response;
   } catch (error) {
     console.error(error.message);
@@ -63,7 +62,7 @@ export const updatePackage = async (id) => {
 // delete package
 export const deletePackage = async (id) => {
   try {
-    const response = await api.delete(`/packages/:${id}`);
+    const response = await api.delete(`/packages/${id}`);
     return response;
   } catch (error) {
     console.error(error.message);
