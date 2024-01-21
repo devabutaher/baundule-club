@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
+import { BiCategory } from "react-icons/bi";
 import { CgWebsite } from "react-icons/cg";
 import { FaRegBookmark, FaRegUser } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
@@ -16,6 +17,7 @@ const Sidebar = () => {
     { label: "Users", link: "/dashboard/users" },
     { label: "Bookings", link: "/dashboard/booking" },
     { label: "Packages", link: "/dashboard/packages" },
+    { label: "Categories", link: "/dashboard/categories" },
     { label: "Blogs", link: "/dashboard/blogs" },
     { label: "Pages", link: "/dashboard/pages" },
     { label: "Profile", link: "/dashboard/profile" },
@@ -74,6 +76,7 @@ const Icon = ({ item }) => {
       {item.label === "Users" && <FaRegUser className="w-5 h-5" />}
       {item.label === "Bookings" && <FaRegBookmark className="w-5 h-5" />}
       {item.label === "Packages" && <MdLuggage className="w-5 h-5" />}
+      {item.label === "Categories" && <BiCategory className="w-5 h-5" />}
       {item.label === "Blogs" && <CgWebsite className="w-5 h-5" />}
       {item.label === "Pages" && <RiPagesLine className="w-5 h-5" />}
       {item.label === "Profile" && <ImProfile className="w-5 h-5" />}

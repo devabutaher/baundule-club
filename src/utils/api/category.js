@@ -3,49 +3,52 @@ import api from "../axios";
 // save category
 export const saveCategory = async (data) => {
   try {
-    const res = await api.post("/categories", data);
-    return res;
+    const response = await api.post("/categories", data);
+    return response.data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
+    return error.response?.data ?? error;
   }
 };
 
 // get all categories
 export const getCategories = async () => {
   try {
-    const res = await api.get("/categories");
-    return res.data;
+    const response = await api.get("/categories");
+    return response.data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
   }
 };
 
 // get single category
 export const getSingleCategory = async (id) => {
   try {
-    const res = await api.get(`/categories/:${id}`);
-    return res.data;
+    const response = await api.get(`/categories/${id}`);
+    return response.data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
   }
 };
 
 // update category
-export const updateCategory = async (id) => {
+export const updateCategory = async (id, data) => {
   try {
-    const res = await api.put(`/categories/:${id}`);
-    return res;
+    const response = await api.put(`/categories/${id}`, data);
+    return response.data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
+    return error.response?.data ?? error;
   }
 };
 
 // delete category
 export const deleteCategory = async (id) => {
   try {
-    const res = await api.delete(`/categories/:${id}`);
-    return res;
+    const response = await api.delete(`/categories/${id}`);
+    return response.data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
+    return error.response?.data ?? error;
   }
 };

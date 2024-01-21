@@ -2,6 +2,7 @@
 
 import { districtData } from "@/data/districtData";
 import { divisionData } from "@/data/divisionData";
+import useCategory from "@/hooks/useCategory";
 import { savePackage } from "@/utils/api/package";
 import {
   FormControl,
@@ -19,6 +20,8 @@ import toast from "react-hot-toast";
 const AddPackageForm = () => {
   const [divisionID, setDivisionID] = useState(6);
   const [filteredDistrict, setFilteredDistrict] = useState(districtData);
+
+  const { categories: categoriesData } = useCategory();
 
   useEffect(() => {
     const result = districtData.filter(
@@ -82,22 +85,9 @@ const AddPackageForm = () => {
               onChange={handleChange}
               input={<OutlinedInput label="Category" />}
             >
-              {[
-                {
-                  name: "Beach",
-                },
-                {
-                  name: "Forest",
-                },
-                {
-                  name: "Mountain",
-                },
-                {
-                  name: "Water fall",
-                },
-              ].map((category, i) => (
-                <MenuItem key={i} value={category.name}>
-                  {category.name}
+              {categoriesData.map((category, i) => (
+                <MenuItem key={i} value={category.title}>
+                  {category.title}
                 </MenuItem>
               ))}
             </Select>
