@@ -13,8 +13,8 @@ export const saveCategory = async (data) => {
 // get all categories
 export const getCategories = async () => {
   try {
-    const res = await api.get("/categories");
-    return res.data;
+    const response = await api.get("/categories");
+    return response.data;
   } catch (error) {
     console.error(error.message);
   }
