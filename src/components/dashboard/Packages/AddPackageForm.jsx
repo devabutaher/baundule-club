@@ -2,10 +2,19 @@
 
 import { districtData } from "@/data/districtData";
 import { divisionData } from "@/data/divisionData";
-import { MenuItem, TextField } from "@mui/material";
+import { savePackage } from "@/utils/api/package";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const AddPackageForm = () => {
   const [divisionID, setDivisionID] = useState(6);
@@ -21,14 +30,30 @@ const AddPackageForm = () => {
 
   const router = useRouter();
 
+  const [categories, setCategories] = useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    setCategories(typeof value === "string" ? value.split(",") : value);
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  function handleFormSubmit(data) {
-    console.table(data);
+  async function handleFormSubmit(data) {
+    const response = await savePackage({ ...data, categories });
+
+    if (response?.success) {
+      toast.success("Package created successfully");
+    } else {
+      toast.error(response.message);
+    }
   }
 
   return (
@@ -47,37 +72,36 @@ const AddPackageForm = () => {
             error={errors.name ? true : false}
             helperText={errors.name?.message}
           />
-          <TextField
-            {...register("category", {
-              required: "*category is required",
-            })}
-            label="Category *"
-            defaultValue=""
-            id="category"
-            fullWidth
-            select
-            error={errors.category ? true : false}
-            helperText={errors.category?.message}
-          >
-            {[
-              {
-                name: "Beach",
-              },
-              {
-                name: "Forest",
-              },
-              {
-                name: "Mountain",
-              },
-              {
-                name: "Water fall",
-              },
-            ].map((category, i) => (
-              <MenuItem key={i} value={category.name}>
-                {category.name}
-              </MenuItem>
-            ))}
-          </TextField>
+          <FormControl fullWidth>
+            <InputLabel id="multiple_category">Category</InputLabel>
+            <Select
+              labelId="multiple_category"
+              id="category"
+              multiple
+              value={categories}
+              onChange={handleChange}
+              input={<OutlinedInput label="Category" />}
+            >
+              {[
+                {
+                  name: "Beach",
+                },
+                {
+                  name: "Forest",
+                },
+                {
+                  name: "Mountain",
+                },
+                {
+                  name: "Water fall",
+                },
+              ].map((category, i) => (
+                <MenuItem key={i} value={category.name}>
+                  {category.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
         <div className="flex gap-2 md:gap-4">
           <TextField

@@ -3,10 +3,11 @@ import api from "../axios";
 // save package
 export const savePackage = async (data) => {
   try {
-    const res = await api.post("/packages", data);
-    return res;
+    const response = await api.post("/packages", data);
+    return response.data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
+    return error.response?.data ?? error;
   }
 };
 
