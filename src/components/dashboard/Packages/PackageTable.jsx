@@ -1,5 +1,6 @@
 "use client";
 
+import usePackages from "@/hooks/usePackages";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -23,25 +24,6 @@ import { visuallyHidden } from "@mui/utils";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
-
-const rows = [
-  {
-    id: 1,
-    name: "Jorinar Basa",
-    destination: "Dhaka",
-    duration: 3,
-    amount: 1800,
-    status: "active",
-  },
-  {
-    id: 2,
-    name: "Taher vai er Basa",
-    destination: "Narsingdi",
-    duration: 4,
-    amount: 2800,
-    status: "false",
-  },
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -73,7 +55,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "id",
+    id: "_id",
     label: "SL.No.",
   },
   {
@@ -81,7 +63,7 @@ const headCells = [
     label: "Package Name",
   },
   {
-    id: "destination",
+    id: "tourLocation",
     label: "Destination",
   },
   {
@@ -89,7 +71,7 @@ const headCells = [
     label: "Duration",
   },
   {
-    id: "amount",
+    id: "price",
     label: "Amount",
   },
 ];
@@ -130,9 +112,7 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
@@ -197,8 +177,10 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function PackageTable() {
+  const { allPackages } = usePackages();
+
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("calories");
+  const [orderBy, setOrderBy] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -218,15 +200,15 @@ export default function PackageTable() {
   };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - allPackages.length) : 0;
 
   const visibleRows = useMemo(
     () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
+      stableSort(allPackages, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, allPackages, page, rowsPerPage]
   );
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -235,7 +217,6 @@ export default function PackageTable() {
   const handleClickId = (event, rowId) => {
     setAnchorEl(event.currentTarget);
     setClickedRowId(rowId);
-    console.log(rowId);
   };
 
   const handleClose = () => {
@@ -259,30 +240,23 @@ export default function PackageTable() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={allPackages.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`;
+                const labelId = `table-checkbox-${index}`;
                 return (
                   <TableRow
                     hover
                     tabIndex={-1}
-                    key={row.id}
+                    key={index}
                     sx={{ cursor: "pointer" }}
                   >
-                    <TableCell>{row.id}</TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding=""
-                    >
-                      {row.name}
-                    </TableCell>
-                    <TableCell>{row.destination}</TableCell>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.tourLocation}</TableCell>
                     <TableCell>{row.duration}</TableCell>
-                    <TableCell>{row.amount}</TableCell>
+                    <TableCell>{row.price}</TableCell>
                     <TableCell>
                       <MoreVertIcon
                         onClick={(event) => handleClickId(event, row._id)}
@@ -319,7 +293,7 @@ export default function PackageTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={allPackages.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
