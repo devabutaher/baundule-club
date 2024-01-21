@@ -101,20 +101,20 @@ const Hero = () => {
               minHeight: "400px",
             }}
           >
-            <h3 className="display-4 text-white uppercase mb-4">
+            <h3 className="mb-4 text-white uppercase display-4">
               Your Destination
             </h3>
             <div className="w-3/4">
               <div
-                className="bg-white items-center justify-between w-full flex rounded-full shadow-lg p-1 mb-5 sticky"
+                className="sticky flex items-center justify-between w-full p-1 mb-5 bg-white rounded-full shadow-lg"
                 style={{ top: "5px" }}
               >
                 <input
-                  className="font-bold uppercase rounded-full w-full py-2 pl-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
+                  className="w-full py-2 pl-4 text-xs font-bold leading-tight text-gray-700 uppercase bg-gray-100 rounded-full focus:outline-none focus:shadow-outline lg:text-sm"
                   type="text"
                   placeholder="Search"
                 />
-                <div className="bg-gray-600 p-2 hover:bg-lime-400 cursor-pointer  rounded-full">
+                <div className="p-2 bg-gray-600 rounded-full cursor-pointer hover:bg-lime-400">
                   <svg
                     className="w-6 h-6 text-white"
                     xmlns="http://www.w3.org/2000/svg"
@@ -122,9 +122,9 @@ const Hero = () => {
                     fill="currentColor"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                 </div>
@@ -155,8 +155,8 @@ const Pkg = ({
 }) => {
   return (
     <>
-      <div className="container mx-auto lg:flex gap-5 my-10 h-full">
-        <div className="lg:w-1/4 shadow-lg rounded border p-5 h-full lg:sticky top-20">
+      <div className="container h-full gap-5 mx-auto my-10 lg:flex">
+        <div className="h-full p-5 border rounded shadow-lg lg:w-1/4 lg:sticky top-20">
           <Filtering
             divi={divi}
             setDivi={setDivi}
@@ -171,14 +171,14 @@ const Pkg = ({
           />
         </div>
         <div className="lg:w-3/4">
-          <div className="shadow-lg rounded border p-5 mb-5">
+          <div className="p-5 mb-5 border rounded shadow-lg">
             <Category
               selectedStatus={selectedStatus}
               setSelectedStatus={setSelectedStatus}
               category={category}
             />
           </div>
-          <div className="shadow-lg rounded border p-5">
+          <div className="p-5 border rounded shadow-lg">
             {isLoading ? (
               <>
                 <Loader />
@@ -197,10 +197,10 @@ const Pkg = ({
                         <div className="hidden md:block rotate-180 p-2 [writing-mode:_vertical-lr]">
                           <time
                             datetime="2022-10-10"
-                            className="flex items-center justify-between gap-4 text-xs font-bold uppercase text-gray-900"
+                            className="flex items-center justify-between gap-4 text-xs font-bold text-gray-900 uppercase"
                           >
                             <span>{pkg.amount} TK</span>
-                            <span className="w-px flex-1 bg-gray-900/10"></span>
+                            <span className="flex-1 w-px bg-gray-900/10"></span>
                             <span>{pkg.duration} Days</span>
                           </time>
                         </div>
@@ -209,21 +209,21 @@ const Pkg = ({
                           <Image
                             alt="Guitar"
                             src={pkg.coverimg}
-                            className="aspect-square h-48 md:h-full w-full object-cover"
+                            className="object-cover w-full h-48 aspect-square md:h-full"
                             width={500}
                             height={500}
                           />
                         </div>
 
-                        <div className="flex flex-1 flex-col justify-between">
-                          <div className="border-s border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
+                        <div className="flex flex-col justify-between flex-1">
+                          <div className="p-4 border-s border-gray-900/10 sm:border-l-transparent sm:p-6">
                             <a href="#">
-                              <h3 className="font-bold uppercase text-gray-900">
+                              <h3 className="font-bold text-gray-900 uppercase">
                                 {pkg.location}
                               </h3>
                             </a>
 
-                            <p className="mt-2 line-clamp-4 text-sm/relaxed text-gray-700">
+                            <p className="mt-2 text-gray-700 line-clamp-4 text-sm/relaxed">
                               {pkg?.description?.map((desc) => desc.desc)}
                             </p>
                           </div>
@@ -231,7 +231,7 @@ const Pkg = ({
                           <div className="sm:flex sm:items-end sm:justify-end">
                             <Link
                               href={`/packagedetails/${pkg._id}`}
-                              className="block bg-lime-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-lime-400"
+                              className="block px-5 py-3 text-xs font-bold text-center text-gray-900 uppercase transition bg-lime-300 hover:bg-lime-400"
                             >
                               Visit here
                             </Link>
@@ -323,7 +323,7 @@ const Filtering = ({
           {selectedDuration ? (
             <>
               <div
-                className="px-3 py-1 bg-red-500 text-white rounded-lg cursor-pointer flex items-center gap-1 mb-3"
+                className="flex items-center gap-1 px-3 py-1 mb-3 text-white bg-red-500 rounded-lg cursor-pointer"
                 onClick={clearDuration}
               >
                 <p>
@@ -339,7 +339,7 @@ const Filtering = ({
           {selected ? (
             <>
               <div
-                className="px-3 py-1 bg-red-500 text-white rounded-lg cursor-pointer flex items-center gap-1 mb-3"
+                className="flex items-center gap-1 px-3 py-1 mb-3 text-white bg-red-500 rounded-lg cursor-pointer"
                 onClick={clearDivision}
               >
                 <p>
@@ -354,7 +354,7 @@ const Filtering = ({
           )}
           {selectedStatus ? (
             <>
-              <div className="px-3 py-1 bg-red-500 text-white rounded-lg cursor-pointer flex items-center gap-1 mb-3">
+              <div className="flex items-center gap-1 px-3 py-1 mb-3 text-white bg-red-500 rounded-lg cursor-pointer">
                 <p>
                   <RxCross2 />
                 </p>
@@ -368,7 +368,7 @@ const Filtering = ({
         <hr />
       </div>
       <div className="py-4">
-        <h2 className="text-lg font-semibold mb-2">Select Travel Duration:</h2>
+        <h2 className="mb-2 text-lg font-semibold">Select Travel Duration:</h2>
 
         <FormControl component="fieldset">
           <RadioGroup
@@ -390,7 +390,7 @@ const Filtering = ({
       </div>
       <hr />
       <div className="py-4">
-        <h2 className="text-lg font-semibold mb-2">Select Division:</h2>
+        <h2 className="mb-2 text-lg font-semibold">Select Division:</h2>
         <div className="space-y-2">
           <FormControl sx={{ width: "100%" }} size="small">
             <Select
@@ -504,27 +504,27 @@ const Paginations = () => {
 const Loader = () => {
   return (
     <>
-      <article className="md:flex bg-white transition shadow hover:shadow-xl mb-5">
+      <article className="mb-5 transition bg-white shadow md:flex hover:shadow-xl">
         <div className="hidden md:block rotate-180 p-2 [writing-mode:_vertical-lr]">
-          <div className="flex items-center justify-between gap-4 text-xs font-bold uppercase text-gray-900">
-            <div className="bg-gray-300 h-5 w-12 animate-pulse"></div>
-            <div className="w-px flex-1 bg-gray-900/10"></div>
-            <div className="bg-gray-300 h-5 w-12 animate-pulse"></div>
+          <div className="flex items-center justify-between gap-4 text-xs font-bold text-gray-900 uppercase">
+            <div className="w-12 h-5 bg-gray-300 animate-pulse"></div>
+            <div className="flex-1 w-px bg-gray-900/10"></div>
+            <div className="w-12 h-5 bg-gray-300 animate-pulse"></div>
           </div>
         </div>
 
         <div className="sm:basis-56">
-          <div className="aspect-square h-48 md:h-full w-full bg-gray-300 animate-pulse"></div>
+          <div className="w-full h-48 bg-gray-300 aspect-square md:h-full animate-pulse"></div>
         </div>
 
-        <div className="flex flex-1 flex-col justify-between">
-          <div className="border-s border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
-            <div className="bg-gray-300 h-6 w-3/4 animate-pulse"></div>
-            <div className="bg-gray-300 h-4 mt-2 w-5/6 animate-pulse"></div>
+        <div className="flex flex-col justify-between flex-1">
+          <div className="p-4 border-s border-gray-900/10 sm:border-l-transparent sm:p-6">
+            <div className="w-3/4 h-6 bg-gray-300 animate-pulse"></div>
+            <div className="w-5/6 h-4 mt-2 bg-gray-300 animate-pulse"></div>
           </div>
 
           <div className="sm:flex sm:items-end sm:justify-end">
-            <div className="block bg-lime-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-lime-400  animate-pulse">
+            <div className="block px-5 py-3 text-xs font-bold text-center text-gray-900 uppercase transition bg-lime-300 hover:bg-lime-400 animate-pulse">
               Loading...
             </div>
           </div>

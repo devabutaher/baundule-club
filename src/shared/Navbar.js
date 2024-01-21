@@ -1,5 +1,7 @@
 "use client";
+
 import { AuthContext } from "@/context/UserContext";
+import "@/styles/navbar.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
@@ -12,7 +14,6 @@ import {
 import { BsInstagram } from "react-icons/bs";
 import { HiMailOpen } from "react-icons/hi";
 import { IoMdCall } from "react-icons/io";
-import "../styles/navbar.css";
 
 const Navbar = () => {
   return (
@@ -28,7 +29,7 @@ export default Navbar;
 const TopNav = () => {
   return (
     <>
-      <section className="container mx-auto flex flex-col md:flex-row justify-around items-center my-3">
+      <section className="container flex flex-col items-center justify-around mx-auto my-3 md:flex-row">
         <div className="flex items-center gap-3 text-lg">
           <div className="flex items-center gap-2 text-[#656565] text-sm md:text-base">
             <HiMailOpen />
@@ -41,7 +42,7 @@ const TopNav = () => {
           </div>
         </div>
         <div className="my-2 md:my-0">
-          <div className="flex items-center gap-5 text-lime-600 text-xl">
+          <div className="flex items-center gap-5 text-xl text-lime-600">
             <Link href={"/#"}>
               {" "}
               <BiLogoFacebook className="hover:text-lime-700" />
@@ -68,6 +69,7 @@ const TopNav = () => {
     </>
   );
 };
+
 const BottomNav = () => {
   const { user, logOut } = useContext(AuthContext);
 
@@ -87,9 +89,11 @@ const BottomNav = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
   const menu = [
     { title: "About", path: "/about" },
     { title: "Service", path: "/service" },
@@ -97,6 +101,7 @@ const BottomNav = () => {
     { title: "Blog", path: "/blog" },
     { title: "Contact", path: "/contact" },
   ];
+
   return (
     <>
       <header
@@ -107,7 +112,7 @@ const BottomNav = () => {
         }
       >
         <section className="container mx-auto">
-          <div className="flex justify-between items-center  lg:rounded-lg">
+          <div className="flex items-center justify-between lg:rounded-lg">
             <a href={"/"} className="cursor-pointer">
               <div className="flex items-center">
                 <div>
@@ -123,11 +128,11 @@ const BottomNav = () => {
             </a>
             <div className="lg:hidden">
               <button
-                className="navbar-burger flex items-center p-3"
+                className="flex items-center p-3 navbar-burger"
                 onClick={toggleMenu}
               >
                 <svg
-                  className="block h-4 w-4 fill-current"
+                  className="block w-4 h-4 fill-current"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -135,31 +140,29 @@ const BottomNav = () => {
                 </svg>
               </button>
             </div>
-            <ul className="hidden  lg:flex lg:items-center lg:w-auto lg:space-x-6 mr-3">
+            <ul className="hidden mr-3 lg:flex lg:items-center lg:w-auto lg:space-x-6">
               {menu.map((m, i) => (
-                <>
-                  <li key={i} className="relative p-2">
-                    <Link
-                      href={m.path}
-                      className="uppercase font-semibold text-sm  cursor-pointer "
-                    >
-                      {m.title}
-                    </Link>
-                  </li>
-                </>
+                <li key={i} className="relative p-2">
+                  <Link
+                    href={m.path}
+                    className="text-sm font-semibold uppercase cursor-pointer "
+                  >
+                    {m.title}
+                  </Link>
+                </li>
               ))}
               <li>
                 {user ? (
                   <Link
                     href={"/dashboard"}
-                    className="bg-transparent hover:bg-lime-700 text-lime-600 font-semibold hover:text-white py-1 px-4 border border-lime-600 hover:border-transparent rounded"
+                    className="px-4 py-1 font-semibold bg-transparent border rounded hover:bg-lime-700 text-lime-600 hover:text-white border-lime-600 hover:border-transparent"
                   >
                     Dashboard
                   </Link>
                 ) : (
                   <Link
                     href={"/signin"}
-                    className="bg-transparent hover:bg-lime-700 text-lime-600 font-semibold hover:text-white py-1 px-4 border border-lime-600 hover:border-transparent rounded"
+                    className="px-4 py-1 font-semibold bg-transparent border rounded hover:bg-lime-700 text-lime-600 hover:text-white border-lime-600 hover:border-transparent"
                   >
                     Sign in
                   </Link>
@@ -173,21 +176,21 @@ const BottomNav = () => {
             }`}
           >
             <div
-              className="navbar-backdrop fixed inset-0  opacity-25"
+              className="fixed inset-0 opacity-25 navbar-backdrop"
               onClick={closeMenu}
             ></div>
-            <nav className="fixed top-0 left-0 bottom-0 flex justify-between flex-col w-5/6 max-w-sm py-6 px-6 h-screen bg-gray-900 bg-opacity-90 backdrop-blur-md transition-all ease-in overflow-y-auto">
+            <nav className="fixed top-0 bottom-0 left-0 flex flex-col justify-between w-5/6 h-screen max-w-sm px-6 py-6 overflow-y-auto transition-all ease-in bg-gray-900 bg-opacity-90 backdrop-blur-md">
               <div>
-                <div className="flex justify-between items-center mb-8">
+                <div className="flex items-center justify-between mb-8">
                   <Link
                     href={"/"}
-                    className="cursor-pointer border text-white px-4 py-2 text-lg font-bold uppercase"
+                    className="px-4 py-2 text-lg font-bold text-white uppercase border cursor-pointer"
                   >
                     Baundule Club
                   </Link>
                   <button className="navbar-close" onClick={closeMenu}>
                     <svg
-                      className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
+                      className="w-6 h-6 text-gray-400 cursor-pointer hover:text-gray-500"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -208,7 +211,7 @@ const BottomNav = () => {
                       <li key={i} className="mb-1">
                         <Link
                           href={m.path}
-                          className="block p-4 text-sm text-white font-semibold  hover:bg-blue-50 hover:text-red-600 rounded cursor-pointer"
+                          className="block p-4 text-sm font-semibold text-white rounded cursor-pointer hover:bg-blue-50 hover:text-red-600"
                         >
                           {m.title}
                         </Link>

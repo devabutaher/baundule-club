@@ -50,7 +50,7 @@ const Contact = () => {
               minHeight: "400px",
             }}
           >
-            <h3 className="display-4 text-white uppercase mb-2">Contact</h3>
+            <h3 className="mb-2 text-white uppercase display-4">Contact</h3>
             <div className="flex text-white">
               <p
                 className="text-2xl text-center"
@@ -73,9 +73,9 @@ export default Contact;
 const ContactInfo = () => {
   return (
     <section className="container mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-3 lg:-mt-20">
-        <div className="shadow hover:shadow-md rounded py-5 px-3 bg-white">
-          <div className="flex justify-center items-center gap-3">
+      <div className="grid grid-cols-1 gap-5 mt-3 md:grid-cols-2 lg:grid-cols-3 lg:-mt-20">
+        <div className="px-3 py-5 bg-white rounded shadow hover:shadow-md">
+          <div className="flex items-center justify-center gap-3">
             <Image
               src={"/Assets/icon/call.png"}
               alt=""
@@ -92,18 +92,18 @@ const ContactInfo = () => {
               height={500}
             />
           </div>
-          <h1 className="text-center my-2">Call Us</h1>
+          <h1 className="my-2 text-center">Call Us</h1>
           <div className="text-center">
             <p>
               Reach out to us at{" "}
-              <a href="tel:+8801976865523" className="text-lime-700 font-bold">
+              <a href="tel:+8801976865523" className="font-bold text-lime-700">
                 +8801976865523
               </a>{" "}
               and experience the difference in seamless communication.
             </p>
           </div>
         </div>
-        <div className="shadow hover:shadow-md rounded py-5 bg-white">
+        <div className="py-5 bg-white rounded shadow hover:shadow-md">
           <div className="flex justify-center">
             <Image
               src={"/Assets/icon/home.png"}
@@ -113,13 +113,13 @@ const ContactInfo = () => {
               height={500}
             />
           </div>
-          <h1 className="text-center my-2">Location</h1>
+          <h1 className="my-2 text-center">Location</h1>
           <div className="text-center">
             <h2>Dhanmondi 1, Beside Bell Tower</h2>
             <h2>House No. 518, Flat-2B</h2>
           </div>
         </div>
-        <div className="shadow hover:shadow-md rounded py-5 px-3 bg-white">
+        <div className="px-3 py-5 bg-white rounded shadow hover:shadow-md">
           <div className="flex justify-center">
             <Image
               src={"/Assets/icon/email.png"}
@@ -129,13 +129,13 @@ const ContactInfo = () => {
               height={500}
             />
           </div>
-          <h1 className="text-center my-2">Email Us</h1>
+          <h1 className="my-2 text-center">Email Us</h1>
           <div className="text-center">
             <p>
               Drop us a digital letter at{" "}
               <a
                 href="mailto:baunduleclub@gmaiol.com"
-                className="text-lime-700 font-bold"
+                className="font-bold text-lime-700"
               >
                 baunduleclub@gmail.com
               </a>{" "}
@@ -175,8 +175,8 @@ const ContactForm = () => {
   };
   return (
     <>
-      <section className="mx-5 lg:mx-0 py-20 shadow-xl">
-        <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x gap-6">
+      <section className="py-20 mx-5 shadow-xl lg:mx-0">
+        <div className="grid max-w-6xl grid-cols-1 gap-6 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
           <iframe
             width="100%"
             height="100%"
@@ -199,7 +199,7 @@ const ContactForm = () => {
                 name="user_name"
                 type="text"
                 placeholder="Your Name..."
-                className="w-full bg-transparent pb-2  border-b  placeholder-gray-300 border-lime-800 outline-none  invalid:border-red-500 transition border-l-4 border-l-lime-600 p-3 bg-white"
+                className="w-full p-3 pb-2 placeholder-gray-300 transition bg-transparent bg-white border-b border-l-4 outline-none border-lime-800 invalid:border-red-500 border-l-lime-600"
               />
             </div>
             <div className="relative before:absolute before:bottom-0 before:h-0.5 before:left-0 before:origin-right focus-within:before:origin-left before:right-0 before:scale-x-0 before:m-auto before:bg-lime-500 focus-within:before:!scale-x-100 focus-within:invalid:before:bg-red-500 before:transition before:duration-300">
@@ -207,7 +207,7 @@ const ContactForm = () => {
                 name="user_subject"
                 type="text"
                 placeholder="Subject..."
-                className="w-full bg-transparent pb-2  border-b  placeholder-gray-300 border-lime-800 outline-none  invalid:border-red-500 transition border-l-4 border-l-lime-600 p-3 bg-white"
+                className="w-full p-3 pb-2 placeholder-gray-300 transition bg-transparent bg-white border-b border-l-4 outline-none border-lime-800 invalid:border-red-500 border-l-lime-600"
               />
             </div>
 
@@ -216,7 +216,7 @@ const ContactForm = () => {
                 name="user_email"
                 type="email"
                 placeholder="Your email address..."
-                className="w-full bg-transparent pb-2  border-b  placeholder-gray-300 border-lime-800 outline-none  invalid:border-red-500 transition border-l-4 border-l-lime-600 p-3 bg-white"
+                className="w-full p-3 pb-2 placeholder-gray-300 transition bg-transparent bg-white border-b border-l-4 outline-none border-lime-800 invalid:border-red-500 border-l-lime-600"
               />
             </div>
 
@@ -224,14 +224,14 @@ const ContactForm = () => {
               <textarea
                 rows="3"
                 placeholder="Message..."
-                className="w-full bg-transparent pb-2  border-b  placeholder-gray-300 border-lime-600 outline-none  transition border-l-4 border-l-lime-600 p-3 bg-white"
+                className="w-full p-3 pb-2 placeholder-gray-300 transition bg-transparent bg-white border-b border-l-4 outline-none border-lime-600 border-l-lime-600"
                 name="message"
                 required
               ></textarea>
             </label>
             <button
               type="submit"
-              className="px-3 py-2 rounded text-white bg-lime-600 hover:bg-lime-800"
+              className="px-3 py-2 text-white rounded bg-lime-600 hover:bg-lime-800"
               disabled={loading}
             >
               {loading ? "Submitting..." : "Submit"}

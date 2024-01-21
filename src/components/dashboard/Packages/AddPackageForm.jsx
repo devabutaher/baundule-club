@@ -52,6 +52,7 @@ const AddPackageForm = () => {
               required: "*category is required",
             })}
             label="Category *"
+            defaultValue=""
             id="category"
             fullWidth
             select
@@ -136,6 +137,7 @@ const AddPackageForm = () => {
               required: "*division is required",
             })}
             label="Division *"
+            defaultValue=""
             id="division"
             fullWidth
             select
@@ -157,6 +159,7 @@ const AddPackageForm = () => {
               required: "*district is required",
             })}
             label="District "
+            defaultValue=""
             id="district"
             fullWidth
             select
