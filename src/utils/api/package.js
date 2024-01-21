@@ -45,17 +45,18 @@ export const getSinglePackage = async (id) => {
     const response = await api.get(`/packages/${id}`);
     return response.data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
   }
 };
 
 // update package
-export const updatePackage = async (id) => {
+export const updatePackage = async (id, data) => {
   try {
-    const response = await api.put(`/packages/${id}`);
-    return response;
+    const response = await api.put(`/packages/${id}`, data);
+    return response.data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
+    return error.response?.data ?? error;
   }
 };
 
@@ -63,34 +64,9 @@ export const updatePackage = async (id) => {
 export const deletePackage = async (id) => {
   try {
     const response = await api.delete(`/packages/${id}`);
-    return response;
-  } catch (error) {
-    console.error(error.message);
-  }
-};
-
-// filter packages
-export const filterPackages = async (
-  categories,
-  division,
-  duration,
-  page,
-  limit
-) => {
-  try {
-    const response = await api.get("/packages", {
-      params: {
-        // categories: categories.join(","), // categories is an array
-        categories, // categories is an array
-        division,
-        duration,
-        page,
-        limit,
-      },
-    });
-    console.log("response:", response);
     return response.data;
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
+    return error.response?.data ?? error;
   }
 };
