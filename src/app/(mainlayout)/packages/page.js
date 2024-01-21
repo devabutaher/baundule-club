@@ -13,6 +13,7 @@ import {
   Select,
   Stack,
 } from "@mui/material";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
@@ -111,9 +112,9 @@ const Hero = () => {
                     fill="currentColor"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                 </div>
@@ -198,7 +199,7 @@ const Pkg = ({
                         </div>
 
                         <div className="sm:basis-56">
-                          <img
+                          <Image
                             alt="Guitar"
                             src={pkg.coverimg}
                             className="object-cover w-full h-48 aspect-square md:h-full"
@@ -244,6 +245,7 @@ const Pkg = ({
     </>
   );
 };
+
 const Filtering = ({
   divi,
   setDivi,
@@ -459,7 +461,7 @@ const Category = ({ selectedStatus, setSelectedStatus, category }) => {
             onClick={() => handleStatusClick(category.title)}
           >
             <h1 style={{ lineHeight: "1.3rem" }}>{category.title}</h1>
-            <img
+            <Image
               src={category.icon}
               alt={category.title}
               width={200}
@@ -472,15 +474,17 @@ const Category = ({ selectedStatus, setSelectedStatus, category }) => {
     </>
   );
 };
+
 const Paginations = ({ setPage, page, totalPages }) => {
   const handleChange = (event, value) => {
-    setPage(value);
+    setPage(Number(value));
   };
+
   return (
     <div className="flex justify-center mt-5">
       <Stack spacing={2}>
         <Pagination
-          count={totalPages}
+          count={parseInt(totalPages)}
           variant="outlined"
           shape="rounded"
           page={page}

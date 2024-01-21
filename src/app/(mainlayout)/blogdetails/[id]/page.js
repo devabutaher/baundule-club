@@ -1,11 +1,5 @@
-import React from 'react';
-
 const BlogDetails = () => {
-    return (
-        <>
-            Blog Details
-        </>
-    );
+  return <div>Blog Details</div>;
 };
 
 export default BlogDetails;

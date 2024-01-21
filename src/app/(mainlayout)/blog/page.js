@@ -22,8 +22,13 @@ const Blog = () => {
         }}
       >
         <div className="text-white max-w-fit">
-          <h1 className="text-6xl font-semibold uppercase text-center mb-1">Blog</h1>
-          <p className="text-center">Don&apos;t focus on having a great blog. Focus on producing a blog that&apos;s great for your readers.</p>
+          <h1 className="mb-1 text-6xl font-semibold text-center uppercase">
+            Blog
+          </h1>
+          <p className="text-center">
+            Don&apos;t focus on having a great blog. Focus on producing a blog
+            that&apos;s great for your readers.
+          </p>
         </div>
       </div>
       {/* blog cover end */}
@@ -35,13 +40,13 @@ const Blog = () => {
           <div className="grid grid-cols-1 col-span-3 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((e, i) => (
               <article
-                className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm"
+                className="overflow-hidden bg-white border border-gray-100 rounded-lg shadow-sm"
                 key={i}
               >
                 <Image
                   alt="Office"
                   src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                  className="h-48 w-full object-cover transition-transform duration-500 transform hover:scale-110"
+                  className="object-cover w-full h-48 transition-transform duration-500 transform hover:scale-110"
                   width={800}
                   height={300}
                 />
@@ -51,20 +56,20 @@ const Blog = () => {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   </h3>
 
-                  <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae
-                    dolores, possimus pariatur animi temporibus nesciunt praesentium dolore
-                    sed nulla ipsum eveniet corporis quidem, mollitia itaque minus soluta,
-                    voluptates neque explicabo tempora nisi culpa eius atque dignissimos.
+                  <p className="mt-2 text-gray-500 line-clamp-3 text-sm/relaxed">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Recusandae dolores, possimus pariatur animi temporibus
+                    nesciunt praesentium dolore sed nulla ipsum eveniet corporis
+                    quidem, mollitia itaque minus soluta, voluptates neque
+                    explicabo tempora nisi culpa eius atque dignissimos.
                     Molestias explicabo corporis voluptatem?
                   </p>
 
                   <Link
                     href={`/blogdetails/${1}`}
-                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-lime-600"
+                    className="inline-flex items-center gap-1 mt-4 text-sm font-medium group text-lime-600"
                   >
                     Find out more
-
                     <span
                       aria-hidden="true"
                       className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
@@ -122,7 +127,7 @@ const Blog = () => {
                       width={500}
                       height={500}
                     />
-                    <div className="py-5 px-1 space-y-1">
+                    <div className="px-1 py-5 space-y-1">
                       <h1 className="hover:text-lime-600">
                         Sundarban awesome travel guide
                       </h1>

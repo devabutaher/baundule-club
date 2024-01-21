@@ -119,7 +119,7 @@ const Hero = ({ category, data }) => {
                                 <input className="w-full py-2 pl-4 text-xs font-bold leading-tight text-gray-700 uppercase bg-gray-100 rounded-full focus:outline-none focus:shadow-outline lg:text-sm" type="text" placeholder="Search" />
                                 <div className="p-2 bg-gray-600 rounded-full cursor-pointer hover:bg-lime-400">
                                     <svg className="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                                        <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
                                     </svg>
                                 </div>
                             </div> */}
@@ -399,33 +399,6 @@ const Filtering = ({
   );
 };
 
-// const Category = ({ category, data }) => {
-//     console.log('data:', data, 'category:', category);
-//     return (
-//         <>
-//             <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-
-//                 {
-//                     category?.map((category, i) => (
-//                         <Link href={`/tour/${category?.catId}`} key={i}>
-//                             <div className={`p-2 shadow hover:shadow-lg rounded flex gap-3  justify-between items-center cursor-pointer h-full hover:bg-blue-800 ease-in-out duration-400 text-black hover:text-white text-sm ${data?.some(title => title?.category === category?.title) ? 'bg-blue-800 text-white active' : 'bg-white'}`}>
-//                                 <h1>{category.title}</h1>
-//                                 <Image
-//                                     src={category.icon}
-//                                     alt={category.title}
-//                                     width={200}
-//                                     height={200}
-//                                     className='w-10 h-10' />
-//                             </div>
-
-//                         </Link>
-
-//                     ))
-//                 }
-//             </div>
-//         </>
-//     )
-// }
 const Category = ({ category, data }) => {
   const [swiperInstance, setSwiperInstance] = useState(null);
   const goPrev = () => {

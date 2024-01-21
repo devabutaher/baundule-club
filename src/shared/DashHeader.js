@@ -3,38 +3,43 @@
 import { AuthContext } from "@/context/UserContext";
 import Image from "next/image";
 import { useContext } from "react";
+import { FaUserCircle } from "react-icons/fa";
 
 const DashHeader = () => {
   const { user, logOut } = useContext(AuthContext);
   return (
     <div className="">
-      <div className="fixed w-full flex items-center justify-between h-16 bg-gray-800 text-white z-50">
+      <div className="fixed z-50 flex items-center justify-between w-full h-16 text-white bg-gray-800">
         <div className="flex items-center justify-start pl-3 border-none">
-          <Image
-            className="w-10 h-10 mr-2 rounded-md overflow-hidden"
-            src={user?.photoURL}
-            alt=""
-            width={500}
-            height={500}
-          />
-          <div className="">
-            <p>{user?.displayName}</p>
-            <div class="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700">
+          {user?.photoURL ? (
+            <Image
+              className="w-10 h-10 mr-2 overflow-hidden rounded-md"
+              src={user?.photoURL}
+              alt="avatar"
+              width={500}
+              height={500}
+            />
+          ) : (
+            <FaUserCircle size={40} className="mr-2" />
+          )}
+          <div>
+            <p>{user?.displayName || "User"}</p>
+            <div className="inline-flex items-center justify-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-700">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
-                class="-ms-1 me-1.5 h-4 w-4"
+                className="-ms-1 me-1.5 h-4 w-4"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <p class="whitespace-nowrap text-[10px]">ADMIN</p>
+              <p className="whitespace-nowrap text-[10px]">ADMIN</p>
             </div>
           </div>
         </div>

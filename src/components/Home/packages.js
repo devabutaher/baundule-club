@@ -42,47 +42,45 @@ const Packages = () => {
         <div className="grid grid-cols-1 gap-10 mx-5 md:grid-cols-2 xl:grid-cols-3 lg:mx-24">
           {data?.slice(0, displayedPackages).map((packages, i) => {
             return (
-              <>
-                <div
-                  className="overflow-hidden transition rounded-lg shadow hover:shadow-lg"
-                  key={i}
-                >
-                  <Image
-                    alt="Office"
-                    src={packages.coverimg}
-                    className="object-cover w-full h-56"
-                    width={500}
-                    height={500}
-                  />
+              <div
+                className="overflow-hidden transition rounded-lg shadow hover:shadow-lg"
+                key={i}
+              >
+                <Image
+                  alt="Office"
+                  src={packages.coverimg}
+                  className="object-cover w-full h-56"
+                  width={500}
+                  height={500}
+                />
 
-                  <div className="p-4 bg-white">
-                    <div className="flex items-center gap-1 text-lg font-semibold">
-                      <MdLocationPin className="text-lime-500" />
-                      <h1>{packages.location}</h1>
-                    </div>
-                    <p className="mt-2 text-gray-500 line-clamp-3 text-sm/relaxed">
-                      {packages.description.map((desc) => desc.desc)}
-                    </p>
-                    <div className="flex items-center justify-between pt-4 mt-4 border-t">
-                      <Link
-                        href={`/packagedetails/${packages._id}`}
-                        className="group inline-flex items-center gap-1 text-sm font-medium text-[#65A30D]"
+                <div className="p-4 bg-white">
+                  <div className="flex items-center gap-1 text-lg font-semibold">
+                    <MdLocationPin className="text-lime-500" />
+                    <h1>{packages.location}</h1>
+                  </div>
+                  <p className="mt-2 text-gray-500 line-clamp-3 text-sm/relaxed">
+                    {packages.description.map((desc) => desc.desc)}
+                  </p>
+                  <div className="flex items-center justify-between pt-4 mt-4 border-t">
+                    <Link
+                      href={`/packagedetails/${packages._id}`}
+                      className="group inline-flex items-center gap-1 text-sm font-medium text-[#65A30D]"
+                    >
+                      Find out more
+                      <span
+                        aria-hidden="true"
+                        className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
                       >
-                        Find out more
-                        <span
-                          aria-hidden="true"
-                          className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
-                        >
-                          &rarr;
-                        </span>
-                      </Link>
-                      <h5 className="flex items-center m-0 text-lg font-semibold">
-                        <TbCurrencyTaka className="text-xl" /> {packages.amount}
-                      </h5>
-                    </div>
+                        &rarr;
+                      </span>
+                    </Link>
+                    <h5 className="flex items-center m-0 text-lg font-semibold">
+                      <TbCurrencyTaka className="text-xl" /> {packages.amount}
+                    </h5>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>

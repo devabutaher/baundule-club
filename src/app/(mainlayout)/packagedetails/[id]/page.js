@@ -116,7 +116,7 @@ const PackagesDetails = () => {
 
   return (
     <>
-      <div className="page-header bg-scroll bg-inner division -mt-7">
+      <div className="bg-scroll page-header bg-inner division -mt-7">
         <div className="container mx-auto">
           <div
             className="flex flex-col items-center justify-center"
@@ -124,7 +124,7 @@ const PackagesDetails = () => {
               minHeight: "400px",
             }}
           >
-            <h3 className="display-4 text-white uppercase mb-2 text-center">
+            <h3 className="mb-2 text-center text-white uppercase display-4">
               {details?.location}
             </h3>
             <div className="flex text-white">
@@ -139,42 +139,39 @@ const PackagesDetails = () => {
         </div>
       </div>
       <div className="container mx-auto">
-        <div className="lg:flex gap-5">
+        <div className="gap-5 lg:flex">
           <div className="lg:w-2/3 box">
             <Accord details={details} />
           </div>
-          <div className="lg:w-1/3 box sticky top-16">
+          <div className="sticky lg:w-1/3 box top-16">
             <div className="mb-3">
               <div>
                 <div dangerouslySetInnerHTML={{ __html: iframeHtml }} />
               </div>
             </div>
             <div className="flex items-center gap-2 mb-3">
-              <MdLocationPin className="text-lime-500 text-lg" />
+              <MdLocationPin className="text-lg text-lime-500" />
               <h1>{details?.location}</h1>
             </div>
             <div className="flex items-center gap-2 mb-3">
-              <BsFillFlagFill className="text-lime-500 text-lg" />
+              <BsFillFlagFill className="text-lg text-lime-500" />
               <h1>{details?.division}</h1>
             </div>
 
             <div className="flex items-center gap-2 mb-3">
-              <RiTeamFill className="text-lime-500 text-lg" />
+              <RiTeamFill className="text-lg text-lime-500" />
               <h1>
                 From {details?.minmember} to {details?.maxmember} people
               </h1>
             </div>
-            <div
-              className="flex justify-between items-center
-                        "
-            >
+            <div className="flex items-center justify-between ">
               <div className="flex items-center gap-2 ">
-                <BiSolidTime className="text-lime-500 text-lg" />
+                <BiSolidTime className="text-lg text-lime-500" />
                 <h1>{details?.duration} days</h1>
               </div>
               <div className="flex items-center gap-2 ">
-                <TbCurrencyTaka className="text-lime-500 text-xl" />
-                <h1 className="font-bold text-xl">{details?.amount} TK</h1>
+                <TbCurrencyTaka className="text-xl text-lime-500" />
+                <h1 className="text-xl font-bold">{details?.amount} TK</h1>
               </div>
             </div>
             <hr className="my-3" />
@@ -186,7 +183,7 @@ const PackagesDetails = () => {
             </div>
             <hr className="my-3" />
             <button
-              className="btn text-center w-full bg-lime-500 text-white hover:bg-lime-700 py-2 rounded-lg"
+              className="w-full py-2 text-center text-white rounded-lg btn bg-lime-500 hover:bg-lime-700"
               onClick={handleOpen}
             >
               Book Now
@@ -263,12 +260,12 @@ const Forminfo = ({
             }}
             className="w-96"
           >
-            <div className="flex justify-between items-center mb-3">
-              <h6 className="font-bold text-lg">{details?.location}</h6>
+            <div className="flex items-center justify-between mb-3">
+              <h6 className="text-lg font-bold">{details?.location}</h6>
             </div>
             <hr />
             <form onSubmit={handleSubmit(formHandle)}>
-              <div className="my-3 w-full">
+              <div className="w-full my-3">
                 <Controller
                   name="name"
                   control={control}
@@ -350,7 +347,7 @@ const Forminfo = ({
                   <div className="flex items-center rounded">
                     <button
                       type="button"
-                      className="w-10 h-10 leading-10 text-white text-lg bg-lime-600 transition hover:opacity-75"
+                      className="w-10 h-10 text-lg leading-10 text-white transition bg-lime-600 hover:opacity-75"
                       onClick={handleDecrement}
                     >
                       -
@@ -366,7 +363,7 @@ const Forminfo = ({
 
                     <button
                       type="button"
-                      className="w-10 h-10 leading-10 bg-lime-600 text-white text-lg transition hover:opacity-75"
+                      className="w-10 h-10 text-lg leading-10 text-white transition bg-lime-600 hover:opacity-75"
                       onClick={handleIncrement}
                     >
                       +
@@ -375,7 +372,7 @@ const Forminfo = ({
                 </div>
                 <div className="flex justify-end mt-8">
                   <div className="w-screen max-w-lg">
-                    <dl className=" text-sm text-gray-700">
+                    <dl className="text-sm text-gray-700 ">
                       <div className="flex justify-between">
                         <dt>Subtotal</dt>
                         <dd>{details?.amount}</dd>
@@ -396,7 +393,7 @@ const Forminfo = ({
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="block rounded bg-lime-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-lime-600"
+                        className="block px-5 py-3 text-sm text-gray-100 transition rounded bg-lime-700 hover:bg-lime-600"
                       >
                         Submit
                       </button>
@@ -430,7 +427,7 @@ const Accord = ({ details }) => {
             id="panel1d-header"
             focusVisibleClassName="text-blue-300"
             expandIcon={
-              <div className="h-8 w-8 border border-gray-700 rounded-full items-center inline-flex justify-center transform transition ease duration-500 group-focus:-rotate-180">
+              <div className="inline-flex items-center justify-center w-8 h-8 transition duration-500 transform border border-gray-700 rounded-full ease group-focus:-rotate-180">
                 <AiOutlineArrowDown className="tabicon" />
               </div>
             }
@@ -439,7 +436,7 @@ const Accord = ({ details }) => {
           >
             <div className="flex items-center gap-2">
               <BsGlobe2 className="tabicon" />{" "}
-              <h1 className="font-bold text-lg uppercase">Information</h1>
+              <h1 className="text-lg font-bold uppercase">Information</h1>
             </div>
           </AccordionSummary>
           <AccordionDetails
@@ -447,25 +444,25 @@ const Accord = ({ details }) => {
               padding: "0",
             }}
           >
-            <div className="p-4 ease duration-500">
+            <div className="p-4 duration-500 ease">
               {details?.information?.map((info, i) => (
                 <p key={i}>{info.desc}</p>
               ))}
               <div className="mb-3">
-                <h2 className="font-bold my-3">
+                <h2 className="my-3 font-bold">
                   For booking this tour, please follow the following steps :
                 </h2>
                 <ul>
                   <li>
-                    <div className="flex relative pb-12">
-                      <div className="h-full w-10 absolute inset-0 flex items-center justify-center">
-                        <div className="h-full w-1 bg-gray-200 pointer-events-none"></div>
+                    <div className="relative flex pb-12">
+                      <div className="absolute inset-0 flex items-center justify-center w-10 h-full">
+                        <div className="w-1 h-full bg-gray-200 pointer-events-none"></div>
                       </div>
-                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-lime-500 inline-flex items-center justify-center text-white relative z-10">
+                      <div className="relative z-10 inline-flex items-center justify-center flex-shrink-0 w-10 h-10 text-white rounded-full bg-lime-500">
                         <GiClick />
                       </div>
                       <div className="flex-grow pl-4">
-                        <h2 className="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">
+                        <h2 className="mb-1 text-sm font-medium tracking-wider text-gray-900 title-font">
                           STEP 1
                         </h2>
                         <p className="leading-relaxed">
@@ -473,15 +470,15 @@ const Accord = ({ details }) => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex relative pb-12">
-                      <div className="h-full w-10 absolute inset-0 flex items-center justify-center">
-                        <div className="h-full w-1 bg-gray-200 pointer-events-none"></div>
+                    <div className="relative flex pb-12">
+                      <div className="absolute inset-0 flex items-center justify-center w-10 h-full">
+                        <div className="w-1 h-full bg-gray-200 pointer-events-none"></div>
                       </div>
-                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-lime-500 inline-flex items-center justify-center text-white relative z-10">
+                      <div className="relative z-10 inline-flex items-center justify-center flex-shrink-0 w-10 h-10 text-white rounded-full bg-lime-500">
                         <AiOutlineForm />
                       </div>
                       <div className="flex-grow pl-4">
-                        <h2 className="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">
+                        <h2 className="mb-1 text-sm font-medium tracking-wider text-gray-900 title-font">
                           STEP 2
                         </h2>
                         <p className="leading-relaxed">
@@ -489,12 +486,12 @@ const Accord = ({ details }) => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex relative">
-                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-lime-500 inline-flex items-center justify-center text-white relative z-10">
+                    <div className="relative flex">
+                      <div className="relative z-10 inline-flex items-center justify-center flex-shrink-0 w-10 h-10 text-white rounded-full bg-lime-500">
                         <RiContactsFill />
                       </div>
                       <div className="flex-grow pl-4">
-                        <h2 className="font-medium title-font text-sm text-gray-900 mb-1 tracking-wider">
+                        <h2 className="mb-1 text-sm font-medium tracking-wider text-gray-900 title-font">
                           STEP 3
                         </h2>
                         <p className="leading-relaxed">
@@ -518,7 +515,7 @@ const Accord = ({ details }) => {
             id="panel2d-header"
             focusVisibleClassName="text-blue-300"
             expandIcon={
-              <div className="h-8 w-8 border border-gray-700 rounded-full items-center inline-flex justify-center transform transition ease duration-500 group-focus:-rotate-180">
+              <div className="inline-flex items-center justify-center w-8 h-8 transition duration-500 transform border border-gray-700 rounded-full ease group-focus:-rotate-180">
                 <AiOutlineArrowDown className="tabicon" />
               </div>
             }
@@ -527,7 +524,7 @@ const Accord = ({ details }) => {
           >
             <div className="flex items-center gap-2">
               <MdOutlineDescription className="tabicon" />{" "}
-              <h1 className="font-bold text-lg">Description</h1>
+              <h1 className="text-lg font-bold">Description</h1>
             </div>
           </AccordionSummary>
           <AccordionDetails
@@ -535,16 +532,16 @@ const Accord = ({ details }) => {
               padding: "0",
             }}
           >
-            <div className="p-4 ease duration-500">
+            <div className="p-4 duration-500 ease">
               {details?.description?.map((desc, i) => {
                 return (
                   <div key={i}>
                     <p>{desc.desc}</p>
                     <div>
-                      <p className="font-semibold my-2">
+                      <p className="my-2 font-semibold">
                         The Caravan is facilitated with:
                       </p>
-                      <ul className="list-disc ml-5">
+                      <ul className="ml-5 list-disc">
                         {desc.facilitated.map((facility, k) => (
                           <li key={k} className="list-outside">
                             {facility}
@@ -553,10 +550,10 @@ const Accord = ({ details }) => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-semibold my-2">
+                      <p className="my-2 font-semibold">
                         Hopping Destinations:
                       </p>
-                      <ul className="list-disc mb-3 ml-5">
+                      <ul className="mb-3 ml-5 list-disc">
                         {desc.hopdestination.map((hopping, k) => (
                           <li key={k} className="list-outside">
                             {hopping}
@@ -565,10 +562,10 @@ const Accord = ({ details }) => {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-semibold my-2">
+                      <p className="my-2 font-semibold">
                         Complementary Food Menu:
                       </p>
-                      <ul className="list-disc ml-5">
+                      <ul className="ml-5 list-disc">
                         {desc.food.map((menu, k) => (
                           <li key={k} className="list-outside">
                             <span className="underline">Welcome Snacks</span>:{" "}
@@ -604,7 +601,7 @@ const Accord = ({ details }) => {
             id="panel2d-header"
             focusVisibleClassName="text-blue-300"
             expandIcon={
-              <div className="h-8 w-8 border border-gray-700 rounded-full items-center inline-flex justify-center transform transition ease duration-500 group-focus:-rotate-180">
+              <div className="inline-flex items-center justify-center w-8 h-8 transition duration-500 transform border border-gray-700 rounded-full ease group-focus:-rotate-180">
                 <AiOutlineArrowDown className="tabicon" />
               </div>
             }
@@ -613,7 +610,7 @@ const Accord = ({ details }) => {
           >
             <div className="flex items-center gap-2">
               <MdOutlineTipsAndUpdates className="tabicon" />{" "}
-              <h1 className="font-bold text-lg">Travel Tips</h1>
+              <h1 className="text-lg font-bold">Travel Tips</h1>
             </div>
           </AccordionSummary>
           <AccordionDetails
@@ -621,9 +618,9 @@ const Accord = ({ details }) => {
               padding: "0",
             }}
           >
-            <div className="p-4 overflow-hidden ease duration-500 ">
+            <div className="p-4 overflow-hidden duration-500 ease ">
               <div className="">
-                <ul className="list-disc ml-5">
+                <ul className="ml-5 list-disc">
                   {details?.tips?.map((tip, k) => (
                     <li key={k} className="list-outside">
                       {tip}
@@ -643,7 +640,7 @@ const Accord = ({ details }) => {
             id="panel2d-header"
             focusVisibleClassName="text-blue-300"
             expandIcon={
-              <div className="h-8 w-8 border border-gray-700 rounded-full items-center inline-flex justify-center transform transition ease duration-500 group-focus:-rotate-180">
+              <div className="inline-flex items-center justify-center w-8 h-8 transition duration-500 transform border border-gray-700 rounded-full ease group-focus:-rotate-180">
                 <AiOutlineArrowDown className="tabicon" />
               </div>
             }
@@ -652,7 +649,7 @@ const Accord = ({ details }) => {
           >
             <div className="flex items-center gap-2">
               <BiPurchaseTag className="tabicon" />{" "}
-              <h1 className="font-bold text-lg">Inclusion & Exclusion</h1>
+              <h1 className="text-lg font-bold">Inclusion & Exclusion</h1>
             </div>
           </AccordionSummary>
           <AccordionDetails
@@ -660,9 +657,9 @@ const Accord = ({ details }) => {
               padding: "0",
             }}
           >
-            <div className="p-4 overflow-hidden ease duration-500">
+            <div className="p-4 overflow-hidden duration-500 ease">
               <div className="">
-                <div className="list-disc ml-5">
+                <div className="ml-5 list-disc">
                   {details?.inorexclu?.map((into, k) => (
                     <div key={k}>
                       <ul className="">
@@ -697,7 +694,7 @@ const Accord = ({ details }) => {
             id="panel2d-header"
             focusVisibleClassName="text-blue-300"
             expandIcon={
-              <div className="h-8 w-8 border border-gray-700 rounded-full items-center inline-flex justify-center transform transition ease duration-500 group-focus:-rotate-180">
+              <div className="inline-flex items-center justify-center w-8 h-8 transition duration-500 transform border border-gray-700 rounded-full ease group-focus:-rotate-180">
                 <AiOutlineArrowDown className="tabicon" />
               </div>
             }
@@ -706,7 +703,7 @@ const Accord = ({ details }) => {
           >
             <div className="flex items-center gap-2">
               <BiSolidLocationPlus className="tabicon" />{" "}
-              <h1 className="font-bold text-lg">Pick Up Location</h1>
+              <h1 className="text-lg font-bold">Pick Up Location</h1>
             </div>
           </AccordionSummary>
           <AccordionDetails
@@ -714,7 +711,7 @@ const Accord = ({ details }) => {
               padding: "0",
             }}
           >
-            <div className="p-4 overflow-hidden ease duration-500 ">
+            <div className="p-4 overflow-hidden duration-500 ease ">
               <p className="">
                 <span className="font-bold">Pick Up: </span>
                 {details?.pickup}
@@ -731,7 +728,7 @@ const Accord = ({ details }) => {
             id="panel2d-header"
             focusVisibleClassName="text-blue-300"
             expandIcon={
-              <div className="h-8 w-8 border border-gray-700 rounded-full items-center inline-flex justify-center transform transition ease duration-500 group-focus:-rotate-180">
+              <div className="inline-flex items-center justify-center w-8 h-8 transition duration-500 transform border border-gray-700 rounded-full ease group-focus:-rotate-180">
                 <AiOutlineArrowDown className="tabicon" />
               </div>
             }
@@ -740,7 +737,7 @@ const Accord = ({ details }) => {
           >
             <div className="flex items-center gap-2">
               <BiTimer className="tabicon" />{" "}
-              <h1 className="font-bold text-lg">Duration</h1>
+              <h1 className="text-lg font-bold">Duration</h1>
             </div>
           </AccordionSummary>
           <AccordionDetails
@@ -748,7 +745,7 @@ const Accord = ({ details }) => {
               padding: "0",
             }}
           >
-            <div className="p-4 overflow-hidden ease duration-500 ">
+            <div className="p-4 overflow-hidden duration-500 ease ">
               <p className="">
                 <span className="font-bold">Timing Duration: </span>
                 {details?.duration <= 1
@@ -767,7 +764,7 @@ const Accord = ({ details }) => {
             id="panel2d-header"
             focusVisibleClassName="text-blue-300"
             expandIcon={
-              <div className="h-8 w-8 border border-gray-700 rounded-full items-center inline-flex justify-center transform transition ease duration-500 group-focus:-rotate-180">
+              <div className="inline-flex items-center justify-center w-8 h-8 transition duration-500 transform border border-gray-700 rounded-full ease group-focus:-rotate-180">
                 <AiOutlineArrowDown className="tabicon" />
               </div>
             }
@@ -776,7 +773,7 @@ const Accord = ({ details }) => {
           >
             <div className="flex items-center gap-2">
               <BsInfoCircle className="tabicon" />{" "}
-              <h1 className="font-bold text-lg">Additional Information</h1>
+              <h1 className="text-lg font-bold">Additional Information</h1>
             </div>
           </AccordionSummary>
           <AccordionDetails
@@ -784,9 +781,9 @@ const Accord = ({ details }) => {
               padding: "0",
             }}
           >
-            <div className="p-4 overflow-hidden ease duration-500">
+            <div className="p-4 overflow-hidden duration-500 ease">
               <div className="">
-                <ul className="list-disc ml-5">
+                <ul className="ml-5 list-disc">
                   {details?.additional?.map((addinfo, k) => (
                     <li key={k} className="list-outside">
                       {addinfo}
@@ -826,7 +823,7 @@ const Gallery = ({ details }) => {
   };
   return (
     <div className="box">
-      <h1 className="text-xl font-bold mb-3">FROM OUR GALLERY</h1>
+      <h1 className="mb-3 text-xl font-bold">FROM OUR GALLERY</h1>
       <p className="md:w-[70%] mb-5">
         Explore our stunning collection of images from around the world. Our
         gallery showcases the beauty of different destinations, cultures, and
@@ -864,7 +861,7 @@ const Gallery = ({ details }) => {
           <SwiperSlide key={img.id} onClick={() => openLightbox(i)}>
             <Image
               src={img.img}
-              className="w-full h-56 object-cover"
+              className="object-cover w-full h-56"
               width={800}
               height={500}
               alt={details.location}
