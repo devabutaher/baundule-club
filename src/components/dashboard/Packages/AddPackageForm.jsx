@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const AddPackageForm = () => {
-  const [divisionID, setDivisionID] = useState(6);
+  const [divisionID, setDivisionID] = useState(null);
   const [filteredDistrict, setFilteredDistrict] = useState(districtData);
 
   const { categories: categoriesData } = useCategory();
@@ -35,7 +35,7 @@ const AddPackageForm = () => {
 
   const [categories, setCategories] = useState([]);
 
-  const handleChange = (event) => {
+  const handleCategory = (event) => {
     const {
       target: { value },
     } = event;
@@ -49,20 +49,57 @@ const AddPackageForm = () => {
     formState: { errors },
   } = useForm();
 
-  async function handleFormSubmit(data) {
-    const response = await savePackage({ ...data, categories });
+  const handleFormSubmit = async (data) => {
+    const tips = data.tips.split(",");
+    const images = data.exclusions.split(",");
+    const facilities = data.facilities.split(",");
+    const inclusions = data.inclusions.split(",");
+    const exclusions = data.exclusions.split(",");
+    const additionalInfo = data.exclusions.split(",");
+    const hopeDestination = data.hopeDestination.split(",");
+    const meals = [
+      {
+        welcome: data.welcome.split(","),
+      },
+      {
+        lunch: data.lunch.split(","),
+      },
+      {
+        evening: data.evening.split(","),
+      },
+    ];
+
+    const packageData = {
+      ...data,
+      categories,
+      hopeDestination,
+      facilities,
+      tips,
+      inclusions,
+      exclusions,
+      additionalInfo,
+      images,
+      meals,
+    };
+
+    const response = await savePackage(packageData);
 
     if (response?.success) {
       toast.success("Package created successfully");
     } else {
       toast.error(response.message);
     }
-  }
+  };
 
   return (
     <div className="max-w-5xl mx-auto">
-      <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
-        <div className="flex gap-2 md:gap-4">
+      <form
+        onSubmit={handleSubmit(handleFormSubmit)}
+        className="space-y-2 md:space-y-4"
+      >
+        {/* package information */}
+        <h1 className="text-xl font-semibold uppercase">Package Info</h1>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
           <TextField
             {...register("name", {
               required: "*package name is required",
@@ -70,19 +107,18 @@ const AddPackageForm = () => {
               max: { value: 20, message: "*invalid package name" },
             })}
             label="Package Name *"
-            id="name"
             fullWidth
             error={errors.name ? true : false}
             helperText={errors.name?.message}
           />
-          <FormControl fullWidth>
-            <InputLabel id="multiple_category">Category</InputLabel>
+          <FormControl fullWidth required>
+            <InputLabel id="category-label">Category</InputLabel>
+
             <Select
-              labelId="multiple_category"
-              id="category"
               multiple
               value={categories}
-              onChange={handleChange}
+              labelId="category-label"
+              onChange={handleCategory}
               input={<OutlinedInput label="Category" />}
             >
               {categoriesData.map((category, i) => (
@@ -93,18 +129,41 @@ const AddPackageForm = () => {
             </Select>
           </FormControl>
         </div>
-        <div className="flex gap-2 md:gap-4">
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
           <TextField
-            label="Duration *"
+            label="Min Duration *"
             type="number"
-            id="duration"
             fullWidth
-            {...register("duration", {
-              required: "*duration is required",
-              min: { value: 1, message: "*invalid duration" },
+            {...register("minDuration", {
+              required: "*min duration is required",
+              min: { value: 1, message: "*invalid min duration" },
             })}
-            error={errors.duration ? true : false}
-            helperText={errors.duration?.message}
+            error={errors.minDuration ? true : false}
+            helperText={errors.minDuration?.message}
+          />
+          <TextField
+            label="Max Duration *"
+            type="number"
+            fullWidth
+            {...register("maxDuration", {
+              required: "*max duration is required",
+              min: { value: 1, message: "*invalid max duration" },
+            })}
+            error={errors.maxDuration ? true : false}
+            helperText={errors.maxDuration?.message}
+          />
+        </div>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("childPrice", {
+              required: "*price is required",
+              min: { value: 1, message: "*invalid price" },
+            })}
+            error={errors.price ? true : false}
+            helperText={errors.price?.message}
+            label="Price *"
+            type="number"
+            fullWidth
           />
           <TextField
             {...register("price", {
@@ -113,17 +172,15 @@ const AddPackageForm = () => {
             })}
             error={errors.price ? true : false}
             helperText={errors.price?.message}
-            label="Price"
+            label="Child Price *"
             type="number"
-            id="price"
             fullWidth
           />
         </div>
-        <div className="flex gap-2 md:gap-4">
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
           <TextField
             label="Min Members *"
             type="number"
-            id="min-members"
             fullWidth
             {...register("minMembers", {
               required: "*min members is required",
@@ -135,7 +192,6 @@ const AddPackageForm = () => {
           <TextField
             label="Max Members *"
             type="number"
-            id="max-members"
             fullWidth
             {...register("maxMembers", {
               required: "*max members is required",
@@ -145,14 +201,17 @@ const AddPackageForm = () => {
             helperText={errors.maxMembers?.message}
           />
         </div>
-        <div className="flex gap-2 md:gap-4">
+
+        {/* package locations */}
+        <h1 className="text-xl font-semibold uppercase">Package Locations</h1>
+
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
           <TextField
             {...register("division", {
               required: "*division is required",
             })}
             label="Division *"
             defaultValue=""
-            id="division"
             fullWidth
             select
             error={errors.division ? true : false}
@@ -161,8 +220,8 @@ const AddPackageForm = () => {
             {divisionData.map((division) => (
               <MenuItem
                 onClick={() => setDivisionID(division.id)}
-                key={division.id}
                 value={division.name}
+                key={division.id}
               >
                 {division.name}
               </MenuItem>
@@ -172,11 +231,11 @@ const AddPackageForm = () => {
             {...register("district", {
               required: "*district is required",
             })}
-            label="District "
+            label="District *"
             defaultValue=""
-            id="district"
-            fullWidth
             select
+            fullWidth
+            disabled={divisionID === null}
             error={errors.district ? true : false}
             helperText={errors.district?.message}
           >
@@ -187,37 +246,187 @@ const AddPackageForm = () => {
             ))}
           </TextField>
         </div>
-        <div className="flex gap-2 md:gap-4">
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
           <TextField
             {...register("tourLocation", {
               required: "*tour location is required",
-              min: { value: 4, message: "*invalid tour location" },
             })}
             label="Tour Location *"
-            id="name"
             fullWidth
             error={errors.tourLocation ? true : false}
             helperText={errors.tourLocation?.message}
           />
           <TextField
+            {...register("pickupLocation", {
+              required: "*pickup location is required",
+            })}
+            label="Pickup Location *"
+            fullWidth
+            error={errors.pickupLocation ? true : false}
+            helperText={errors.pickupLocation?.message}
+          />
+        </div>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("hopeDestination", {
+              required: "*hope destination is required",
+            })}
+            label="Hope Destination *"
+            fullWidth
+            error={errors.hopeDestination ? true : false}
+            helperText={errors.hopeDestination?.message}
+          />
+          <div className="w-full max-md:hidden"></div>
+        </div>
+
+        {/* package details */}
+        <h1 className="text-xl font-semibold uppercase">Package Details</h1>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("facilities", {
+              required: "*facilities is required",
+            })}
+            label="Facilities *"
+            fullWidth
+            error={errors.facilities ? true : false}
+            helperText={errors.facilities?.message}
+          />
+          <TextField
+            {...register("tips", {
+              required: "*tips meals is required",
+            })}
+            label="Tips *"
+            fullWidth
+            error={errors.tips ? true : false}
+            helperText={errors.tips?.message}
+          />
+        </div>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("inclusions", {
+              required: "*inclusions is required",
+            })}
+            label="Inclusions *"
+            fullWidth
+            error={errors.inclusions ? true : false}
+            helperText={errors.inclusions?.message}
+          />
+          <TextField
+            {...register("exclusions", {
+              required: "*exclusions meals is required",
+            })}
+            label="Exclusions *"
+            fullWidth
+            error={errors.exclusions ? true : false}
+            helperText={errors.exclusions?.message}
+          />
+        </div>
+
+        {/* meals */}
+        <h1 className="font-semibold uppercase">Meals</h1>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("welcome", {
+              required: "*welcome meals is required",
+            })}
+            label="Welcome*"
+            fullWidth
+            error={errors.welcome ? true : false}
+            helperText={errors.welcome?.message}
+          />
+          <TextField
+            {...register("lunch", {
+              required: "*lunch meals is required",
+            })}
+            label="Lunch*"
+            fullWidth
+            error={errors.lunch ? true : false}
+            helperText={errors.lunch?.message}
+          />
+          <TextField
+            {...register("evening", {
+              required: "*evening meals is required",
+            })}
+            label="Evening*"
+            fullWidth
+            error={errors.evening ? true : false}
+            helperText={errors.evening?.message}
+          />
+        </div>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("additionalInfo", {
+              required: "*additional info is required",
+            })}
+            label="Additional Info"
+            fullWidth
+            multiline
+            rows={4}
+            error={errors.additionalInfo ? true : false}
+            helperText={errors.additionalInfo?.message}
+          />
+        </div>
+
+        {/* more information */}
+        <h1 className="text-xl font-semibold uppercase">More Info</h1>
+
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("coverPic", {
+              required: "*cover pic is required",
+            })}
+            label="Cover Pic *"
+            fullWidth
+            error={errors.coverPic ? true : false}
+            helperText={errors.coverPic?.message}
+          />
+        </div>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("images", {
+              required: "*images is required",
+            })}
+            label="Images *"
+            fullWidth
+            error={errors.images ? true : false}
+            helperText={errors.images?.message}
+          />
+        </div>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
             {...register("mapUrl", {
               required: "*map url is required",
             })}
             label="Map URL *"
-            id="name"
             fullWidth
             error={errors.mapUrl ? true : false}
             helperText={errors.mapUrl?.message}
           />
         </div>
-        <div className="flex gap-2 md:gap-4">
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
           <TextField
-            {...register("description")}
-            label="Description"
-            id="name"
+            {...register("information", {
+              required: "*information is required",
+            })}
+            label="Information"
             fullWidth
             multiline
             rows={4}
+            error={errors.information ? true : false}
+            helperText={errors.information?.message}
+          />
+        </div>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("description", {
+              required: "*description is required",
+            })}
+            label="Description"
+            fullWidth
+            multiline
+            rows={4}
+            error={errors.description ? true : false}
+            helperText={errors.description?.message}
           />
         </div>
         <div className="flex justify-end gap-4">
