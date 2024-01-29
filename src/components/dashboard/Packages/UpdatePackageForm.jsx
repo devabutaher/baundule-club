@@ -22,7 +22,7 @@ import { useQuery } from "react-query";
 
 const UpdatePackageForm = () => {
   const { refetch } = usePackages();
-  const { categories: categoriesData } = useCategory();
+  const { categories: categoriesData, loader } = useCategory();
 
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
@@ -75,7 +75,7 @@ const UpdatePackageForm = () => {
 
   return (
     <div className="max-w-5xl mx-auto">
-      {isLoading ? (
+      {isLoading && loader ? (
         <Loader isLoading={isLoading} />
       ) : (
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
@@ -103,9 +103,9 @@ const UpdatePackageForm = () => {
                 onChange={handleChange}
                 input={<OutlinedInput label="Category *" />}
               >
-                {categoriesData.map((category, i) => (
-                  <MenuItem key={i} value={category.title}>
-                    {category.title}
+                {categoriesData?.map((category, i) => (
+                  <MenuItem key={i} value={category?.title}>
+                    {category?.title}
                   </MenuItem>
                 ))}
               </Select>
@@ -184,9 +184,9 @@ const UpdatePackageForm = () => {
                 <MenuItem
                   onClick={() => setDivisionID(division.id)}
                   key={division.id}
-                  value={division.name}
+                  value={division?.name}
                 >
-                  {division.name}
+                  {division?.name}
                 </MenuItem>
               ))}
             </TextField>
@@ -203,8 +203,8 @@ const UpdatePackageForm = () => {
               helperText={errors.district?.message}
             >
               {filteredDistrict.map((district) => (
-                <MenuItem key={district.id} value={district.name}>
-                  {district.name}
+                <MenuItem key={district?.id} value={district?.name}>
+                  {district?.name}
                 </MenuItem>
               ))}
             </TextField>
