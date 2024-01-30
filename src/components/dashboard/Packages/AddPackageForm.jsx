@@ -50,36 +50,70 @@ const AddPackageForm = () => {
   } = useForm();
 
   const handleFormSubmit = async (data) => {
-    const tips = data.tips.split(",");
-    const images = data.exclusions.split(",");
-    const facilities = data.facilities.split(",");
-    const inclusions = data.inclusions.split(",");
-    const exclusions = data.exclusions.split(",");
-    const additionalInfo = data.exclusions.split(",");
-    const hopeDestination = data.hopeDestination.split(",");
-    const meals = [
-      {
-        welcome: data.welcome.split(","),
-      },
-      {
-        lunch: data.lunch.split(","),
-      },
-      {
-        evening: data.evening.split(","),
-      },
-    ];
+    let {
+      tips,
+      images,
+      facilities,
+      inclusions,
+      exclusions,
+      additionalInfo,
+      hopeDestination,
+      welcome,
+      lunch,
+      evening,
+      name,
+      price,
+      childPrice,
+      division,
+      district,
+      tourLocation,
+      pickupLocation,
+      minDuration,
+      maxDuration,
+      minMembers,
+      maxMembers,
+      description,
+      information,
+      mapUrl,
+      coverPic,
+    } = data;
+
+    tips = tips.split(",").map((item) => item.trim());
+    lunch = lunch.split(",").map((item) => item.trim());
+    welcome = welcome.split(",").map((item) => item.trim());
+    evening = evening.split(",").map((item) => item.trim());
+    images = images.split(",").map((item) => item.trim());
+    facilities = facilities.split(",").map((item) => item.trim());
+    inclusions = inclusions.split(",").map((item) => item.trim());
+    exclusions = exclusions.split(",").map((item) => item.trim());
+    additionalInfo = additionalInfo.split(",").map((item) => item.trim());
+    hopeDestination = hopeDestination.split(",").map((item) => item.trim());
 
     const packageData = {
-      ...data,
+      name,
       categories,
+      minDuration,
+      maxDuration,
+      price,
+      childPrice,
+      minMembers,
+      maxMembers,
+      division,
+      district,
+      tourLocation,
+      pickupLocation,
       hopeDestination,
+      meals: { welcome, lunch, evening },
       facilities,
       tips,
       inclusions,
       exclusions,
       additionalInfo,
+      coverPic,
       images,
-      meals,
+      mapUrl,
+      information,
+      description,
     };
 
     const response = await savePackage(packageData);

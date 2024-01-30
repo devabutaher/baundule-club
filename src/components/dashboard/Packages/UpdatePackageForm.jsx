@@ -23,7 +23,9 @@ import { useQuery } from "react-query";
 const UpdatePackageForm = () => {
   const { refetch } = usePackages();
   const { categories: categoriesData, loader } = useCategory();
+  const router = useRouter();
 
+  // get single package by id
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
@@ -32,6 +34,7 @@ const UpdatePackageForm = () => {
     queryFn: () => getSinglePackage(id),
   });
 
+  // filter division district
   const [divisionID, setDivisionID] = useState(
     divisionData.find((division) => division.name === packageData.division)?.id
   );
@@ -44,8 +47,6 @@ const UpdatePackageForm = () => {
 
     setFilteredDistrict(result);
   }, [divisionID]);
-
-  const router = useRouter();
 
   const [categories, setCategories] = useState(packageData?.categories ?? []);
 
@@ -213,7 +214,6 @@ const UpdatePackageForm = () => {
             <TextField
               {...register("tourLocation", {
                 required: "*tour location is required",
-                min: { value: 4, message: "*invalid tour location" },
               })}
               label="Tour Location *"
               id="name"

@@ -2,12 +2,9 @@
 
 import usePackages from "@/hooks/usePackages";
 import { deletePackage } from "@/utils/api/package";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Menu, MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,10 +14,6 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import { alpha } from "@mui/material/styles";
 import { visuallyHidden } from "@mui/utils";
 import Link from "next/link";
 import PropTypes from "prop-types";
@@ -73,6 +66,10 @@ const headCells = [
     label: "Duration",
   },
   {
+    id: "members",
+    label: "Members",
+  },
+  {
     id: "price",
     label: "Amount",
   },
@@ -92,6 +89,9 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             padding={"normal"}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx={{
+              fontWeight: 600,
+            }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -107,7 +107,13 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell>Action</TableCell>
+        <TableCell
+          sx={{
+            fontWeight: 600,
+          }}
+        >
+          Action
+        </TableCell>
       </TableRow>
     </TableHead>
   );
@@ -118,64 +124,6 @@ EnhancedTableHead.propTypes = {
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
-};
-
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-}
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
 };
 
 export default function PackageTable() {
@@ -267,8 +215,13 @@ export default function PackageTable() {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.tourLocation}</TableCell>
-                    <TableCell>{row.duration}</TableCell>
-                    <TableCell>{row.price}</TableCell>
+                    <TableCell>
+                      {row.minDuration}-{row.maxDuration}
+                    </TableCell>
+                    <TableCell>
+                      {row.minMembers}-{row.maxMembers}
+                    </TableCell>
+                    <TableCell>${row.price}</TableCell>
                     <TableCell>
                       <MoreVertIcon
                         onClick={(event) => handleClickId(event, row._id)}
