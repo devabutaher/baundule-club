@@ -442,7 +442,7 @@ const AddPackageForm = () => {
             {...register("information", {
               required: "*information is required",
             })}
-            label="Information"
+            label="Information *"
             fullWidth
             multiline
             rows={4}
@@ -455,7 +455,7 @@ const AddPackageForm = () => {
             {...register("description", {
               required: "*description is required",
             })}
-            label="Description"
+            label="Description *"
             fullWidth
             multiline
             rows={4}

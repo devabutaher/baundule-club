@@ -3,7 +3,7 @@
 import usePackages from "@/hooks/usePackages";
 import { deletePackage } from "@/utils/api/package";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Menu, MenuItem } from "@mui/material";
+import { Avatar, Menu, MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -54,6 +54,14 @@ const headCells = [
     label: "SL.No.",
   },
   {
+    id: "createdAt",
+    label: "Date",
+  },
+  {
+    id: "coverPic",
+    label: "Cover",
+  },
+  {
     id: "name",
     label: "Package Name",
   },
@@ -62,11 +70,11 @@ const headCells = [
     label: "Destination",
   },
   {
-    id: "duration",
+    id: "minDuration",
     label: "Duration",
   },
   {
-    id: "members",
+    id: "minMembers",
     label: "Members",
   },
   {
@@ -205,6 +213,9 @@ export default function PackageTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
+                let [date, time] = row.createdAt.split("T");
+                time = time.split(".")[0];
+
                 return (
                   <TableRow
                     hover
@@ -213,15 +224,28 @@ export default function PackageTable() {
                     sx={{ cursor: "pointer" }}
                   >
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>
+                      {time}
+                      <br />
+                      {date}
+                    </TableCell>
+                    <TableCell>
+                      <Avatar
+                        sx={{ width: 56, height: 56 }}
+                        variant="square"
+                        alt="Cover pic"
+                        src={row.coverPic}
+                      />
+                    </TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.tourLocation}</TableCell>
                     <TableCell>
-                      {row.minDuration}-{row.maxDuration}
+                      {row.minDuration}-{row.maxDuration} days
                     </TableCell>
                     <TableCell>
-                      {row.minMembers}-{row.maxMembers}
+                      {row.minMembers}-{row.maxMembers} pers
                     </TableCell>
-                    <TableCell>${row.price}</TableCell>
+                    <TableCell>{row.price} TK</TableCell>
                     <TableCell>
                       <MoreVertIcon
                         onClick={(event) => handleClickId(event, row._id)}
