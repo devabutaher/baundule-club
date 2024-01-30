@@ -5,7 +5,7 @@ import { deleteCategory } from "@/utils/api/category";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Menu, MenuItem } from "@mui/material";
+import { Avatar, Menu, MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
@@ -22,6 +22,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { alpha } from "@mui/material/styles";
 import { visuallyHidden } from "@mui/utils";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
@@ -61,8 +62,20 @@ const headCells = [
     label: "SL.No.",
   },
   {
+    id: "date",
+    label: "Date",
+  },
+  {
+    id: "icon",
+    label: "Icon",
+  },
+  {
     id: "title",
     label: "Category Name",
+  },
+  {
+    id: "description",
+    label: "Description",
   },
 ];
 
@@ -225,9 +238,8 @@ export default function CategoryTable() {
     handleClose();
   };
 
-  const handleUpdate = async (id) => {
+  const handleUpdate = () => {
     handleClose();
-    router.push(`/dashboard/update-category?id=${id}`);
   };
 
   return (
@@ -247,6 +259,9 @@ export default function CategoryTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
+                let [date, time] = row.createdAt.split("T");
+                time = time.split(".")[0];
+
                 return (
                   <TableRow
                     hover
@@ -255,7 +270,12 @@ export default function CategoryTable() {
                     sx={{ cursor: "pointer" }}
                   >
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>{date}</TableCell>
+                    <TableCell>
+                      <Avatar alt="icon" src={row.icon} />
+                    </TableCell>
                     <TableCell>{row.title}</TableCell>
+                    <TableCell>{row.description}</TableCell>
                     <TableCell>
                       <MoreVertIcon
                         onClick={(event) => handleClickId(event, row._id)}
@@ -266,8 +286,13 @@ export default function CategoryTable() {
                         open={Boolean(anchorEl) && clickedRowId === row._id}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={() => handleUpdate(row._id)}>
-                          Update
+                        <MenuItem onClick={() => handleUpdate()}>
+                          <Link
+                            passHref
+                            href={`/dashboard/update-category?id=${row._id}`}
+                          >
+                            Update
+                          </Link>
                         </MenuItem>
                         <MenuItem onClick={() => handleDelete(row._id)}>
                           Delete

@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -46,11 +46,13 @@ import toast from "react-hot-toast";
 const PackagesDetails = () => {
   const params = useParams();
   const id = params.id;
+  const router = useRouter();
 
   const { data: details } = useQuery("details", async () => {
     const response = await axios.get(
       `https://baundule-club-server.vercel.app/packages/${id}`
     );
+    console.log(response);
     return response.data;
   });
   const [open, setOpen] = useState(false);
@@ -59,8 +61,16 @@ const PackagesDetails = () => {
   const [quantity, setQuantity] = useState(1);
 
   const handleIncrement = () => {
-    setQuantity(quantity + 1);
+    const updatedQuantity = quantity + 1;
+    const maxMember = details.maxmember;
+
+    if (updatedQuantity <= maxMember) {
+      setQuantity(updatedQuantity);
+    } else {
+      toast.error(`There are only ${details.maxmember} seats on the selected Package, to book you must contact us`);
+    }
   };
+
 
   const handleDecrement = () => {
     if (quantity > 1) {
@@ -113,6 +123,11 @@ const PackagesDetails = () => {
   const iframeHtml = details?.mapURL
     .replace(/width="[^"]+"/, 'width="100%"')
     .replace(/height="[^"]+"/, 'height="250px"');
+
+
+    const navigateToOrder = () => {
+      router.push(`/booking/${id}`);
+    };
 
   return (
     <>
@@ -182,27 +197,12 @@ const PackagesDetails = () => {
               </h1>
             </div>
             <hr className="my-3" />
-            <button
-              className="w-full py-2 text-center text-white rounded-lg btn bg-lime-500 hover:bg-lime-700"
-              onClick={handleOpen}
-            >
-              Book Now
-            </button>
-            <Forminfo
-              open={open}
-              setOpen={setOpen}
-              handleClose={handleClose}
-              handleOpen={handleOpen}
-              details={details}
-              handleDecrement={handleDecrement}
-              handleIncrement={handleIncrement}
-              quantity={quantity}
-              totalValue={totalValue}
-              handleFormSubmit={handleFormSubmit}
-              setQuantity={setQuantity}
-              handleSubmit={handleSubmit}
-              control={control}
-            />
+            <div className="w-full">
+
+                <button onClick={navigateToOrder} className="w-full py-2 text-center text-white rounded-lg btn bg-lime-500 hover:bg-lime-700">
+                  Book Now
+                </button>
+            </div>
           </div>
         </div>
       </div>
@@ -214,200 +214,6 @@ const PackagesDetails = () => {
 };
 
 export default PackagesDetails;
-
-const Forminfo = ({
-  open,
-  handleClose,
-  details,
-  handleFormSubmit,
-  quantity,
-  handleDecrement,
-  handleIncrement,
-  totalValue,
-  setQuantity,
-  handleSubmit,
-  control,
-}) => {
-  const formHandle = (data) => {
-    handleFormSubmit(data);
-  };
-
-  const handleQuantityChange = (event) => {
-    const newQuantity = parseFloat(event.target.value);
-    if (newQuantity >= 1) {
-      setQuantity(newQuantity);
-    }
-  };
-  return (
-    <>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-      >
-        <Fade in={open}>
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              background: "white",
-              boxShadow: 24,
-              p: 4,
-            }}
-            className="w-96"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <h6 className="text-lg font-bold">{details?.location}</h6>
-            </div>
-            <hr />
-            <form onSubmit={handleSubmit(formHandle)}>
-              <div className="w-full my-3">
-                <Controller
-                  name="name"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      required
-                      hiddenLabel
-                      variant="filled"
-                      placeholder="Name..."
-                      size="small"
-                      sx={{
-                        width: "100%",
-                      }}
-                      {...field}
-                    />
-                  )}
-                />
-                <Controller
-                  name="email"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      required
-                      hiddenLabel
-                      variant="filled"
-                      placeholder="Your email address..."
-                      size="small"
-                      sx={{
-                        width: "100%",
-                        margin: "10px 0",
-                      }}
-                      {...field}
-                    />
-                  )}
-                />
-                <Controller
-                  name="address"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      required
-                      hiddenLabel
-                      variant="filled"
-                      placeholder="Your address..."
-                      size="small"
-                      sx={{
-                        width: "100%",
-                        margin: "10px 0",
-                      }}
-                      {...field}
-                    />
-                  )}
-                />
-                <div className="flex justify-between gap-2 mt-2">
-                  <Controller
-                    required
-                    name="phone"
-                    control={control}
-                    defaultValue=""
-                    render={({ field }) => (
-                      <TextField
-                        hiddenLabel
-                        variant="filled"
-                        placeholder="Phone Number..."
-                        size="small"
-                        sx={{
-                          width: "100%",
-                        }}
-                        {...field}
-                      />
-                    )}
-                  />
-                </div>
-                <div className="flex items-center justify-between border mt-3 bg-[#E8E8E8]">
-                  <p className="pl-3">Member</p>
-                  <div className="flex items-center rounded">
-                    <button
-                      type="button"
-                      className="w-10 h-10 text-lg leading-10 text-white transition bg-lime-600 hover:opacity-75"
-                      onClick={handleDecrement}
-                    >
-                      -
-                    </button>
-
-                    <input
-                      type="number"
-                      id="Quantity"
-                      value={quantity}
-                      className="h-10 w-10 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
-                      onChange={handleQuantityChange}
-                    />
-
-                    <button
-                      type="button"
-                      className="w-10 h-10 text-lg leading-10 text-white transition bg-lime-600 hover:opacity-75"
-                      onClick={handleIncrement}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-                <div className="flex justify-end mt-8">
-                  <div className="w-screen max-w-lg">
-                    <dl className="text-sm text-gray-700 ">
-                      <div className="flex justify-between">
-                        <dt>Subtotal</dt>
-                        <dd>{details?.amount}</dd>
-                      </div>
-
-                      <div className="flex justify-between">
-                        <dt>Members</dt>
-                        <dd>* {quantity}</dd>
-                      </div>
-                      <hr className="my-3" />
-
-                      <div className="flex justify-between !text-base font-medium mb-3">
-                        <dt>Total</dt>
-                        <dd>{totalValue} TK</dd>
-                      </div>
-                    </dl>
-
-                    <div className="flex justify-end">
-                      <button
-                        type="submit"
-                        className="block px-5 py-3 text-sm text-gray-100 transition rounded bg-lime-700 hover:bg-lime-600"
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </Box>
-        </Fade>
-      </Modal>
-    </>
-  );
-};
 
 const Accord = ({ details }) => {
   const [expanded, setExpanded] = useState("panel1");

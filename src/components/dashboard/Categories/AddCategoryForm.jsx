@@ -18,16 +18,16 @@ const AddCategoryForm = () => {
     formState: { errors },
   } = useForm();
 
-  async function handleFormSubmit(data) {
+  const handleFormSubmit = async (data) => {
     const response = await saveCategory(data);
 
     if (response?.success) {
       toast.success("Category created successfully");
       refetch();
     } else {
-      toast.error(response.message);
+      toast.error(response?.message);
     }
-  }
+  };
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -55,6 +55,17 @@ const AddCategoryForm = () => {
             fullWidth
             error={errors.icon ? true : false}
             helperText={errors.icon?.message}
+          />
+        </div>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("description")}
+            label="Description"
+            fullWidth
+            multiline
+            rows={4}
+            error={errors.description ? true : false}
+            helperText={errors.description?.message}
           />
         </div>
         <div className="flex justify-end gap-4">

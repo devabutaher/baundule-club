@@ -1,12 +1,10 @@
 "use client";
 
 import usePackages from "@/hooks/usePackages";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
+import { deletePackage } from "@/utils/api/package";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Menu, MenuItem } from "@mui/material";
+import { Avatar, Menu, MenuItem } from "@mui/material";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,14 +14,11 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import { alpha } from "@mui/material/styles";
 import { visuallyHidden } from "@mui/utils";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import { useMemo, useState } from "react";
+import toast from "react-hot-toast";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -59,6 +54,14 @@ const headCells = [
     label: "SL.No.",
   },
   {
+    id: "createdAt",
+    label: "Date",
+  },
+  {
+    id: "coverPic",
+    label: "Cover",
+  },
+  {
     id: "name",
     label: "Package Name",
   },
@@ -67,8 +70,12 @@ const headCells = [
     label: "Destination",
   },
   {
-    id: "duration",
+    id: "minDuration",
     label: "Duration",
+  },
+  {
+    id: "minMembers",
+    label: "Members",
   },
   {
     id: "price",
@@ -90,6 +97,9 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             padding={"normal"}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx={{
+              fontWeight: 600,
+            }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -105,7 +115,13 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
-        <TableCell>Action</TableCell>
+        <TableCell
+          sx={{
+            fontWeight: 600,
+          }}
+        >
+          Action
+        </TableCell>
       </TableRow>
     </TableHead>
   );
@@ -118,66 +134,8 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-}
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
-
 export default function PackageTable() {
-  const { allPackages } = usePackages();
+  const { allPackages, refetch } = usePackages();
 
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
@@ -227,6 +185,17 @@ export default function PackageTable() {
     handleClose();
   };
 
+  const handleDelete = async (id) => {
+    const response = await deletePackage(id);
+
+    if (response?.success) {
+      refetch();
+      toast.success("Package deleted successfully");
+    }
+
+    handleClose();
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -244,6 +213,9 @@ export default function PackageTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
+                let [date, time] = row.createdAt.split("T");
+                time = time.split(".")[0];
+
                 return (
                   <TableRow
                     hover
@@ -252,10 +224,28 @@ export default function PackageTable() {
                     sx={{ cursor: "pointer" }}
                   >
                     <TableCell>{index + 1}</TableCell>
+                    <TableCell>
+                      {time}
+                      <br />
+                      {date}
+                    </TableCell>
+                    <TableCell>
+                      <Avatar
+                        sx={{ width: 56, height: 56 }}
+                        variant="square"
+                        alt="Cover pic"
+                        src={row.coverPic}
+                      />
+                    </TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.tourLocation}</TableCell>
-                    <TableCell>{row.duration}</TableCell>
-                    <TableCell>{row.price}</TableCell>
+                    <TableCell>
+                      {row.minDuration}-{row.maxDuration} days
+                    </TableCell>
+                    <TableCell>
+                      {row.minMembers}-{row.maxMembers} pers
+                    </TableCell>
+                    <TableCell>{row.price} TK</TableCell>
                     <TableCell>
                       <MoreVertIcon
                         onClick={(event) => handleClickId(event, row._id)}
@@ -267,11 +257,16 @@ export default function PackageTable() {
                         onClose={handleClose}
                       >
                         <MenuItem onClick={handleEditClick}>
-                          <Link href={``} passHref>
+                          <Link
+                            passHref
+                            href={`/dashboard/update-package?id=${row._id}`}
+                          >
                             <div>Edit</div>
                           </Link>
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>Delete</MenuItem>
+                        <MenuItem onClick={() => handleDelete(row._id)}>
+                          Delete
+                        </MenuItem>
                       </Menu>
                     </TableCell>
                   </TableRow>

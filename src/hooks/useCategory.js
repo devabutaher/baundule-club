@@ -4,14 +4,14 @@ import { useQuery } from "react-query";
 const useCategory = () => {
   const {
     data: categories = [],
-    isLoading,
+    isLoading: loader,
     refetch,
   } = useQuery({
     queryKey: ["category"],
     queryFn: () => getCategories(),
   });
 
-  return { categories, isLoading, refetch };
+  return { categories, loader, refetch };
 };
 
 export default useCategory;

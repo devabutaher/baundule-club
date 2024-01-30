@@ -67,6 +67,16 @@ const UpdateCategoryForm = () => {
             helperText={errors.icon?.message}
           />
         </div>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-4">
+          <TextField
+            {...register("description")}
+            label="Description"
+            defaultValue={category?.description ?? " "}
+            fullWidth
+            multiline
+            rows={4}
+          />
+        </div>
         <div className="flex justify-end gap-4">
           <button
             type="button"

@@ -60,7 +60,7 @@ const Packages = () => {
                     <h1>{packages.location}</h1>
                   </div>
                   <p className="mt-2 text-gray-500 line-clamp-3 text-sm/relaxed">
-                    {packages.description.map((desc) => desc.desc)}
+                    {packages.description?.map((desc) => desc.desc)}
                   </p>
                   <div className="flex items-center justify-between pt-4 mt-4 border-t">
                     <Link
